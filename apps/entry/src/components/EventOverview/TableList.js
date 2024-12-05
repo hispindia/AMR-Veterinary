@@ -38,7 +38,7 @@ export const TableList = (props) => {
     if (eventStatus == "COMPLETED" && code == "GP") {
         headers = [
             {
-                name: 'Medical Record number',
+                name: 'Patient type',
                 options: {
                     customBodyRender: (value, tableMeta, updateValue) => {
                         return (
@@ -228,7 +228,7 @@ export const TableList = (props) => {
     else {
                 headers = [
             {
-                name: 'Medical Record number',
+                name: 'Patient type',
             },
             {
                 name: 'Name of the Patient',
@@ -246,6 +246,7 @@ export const TableList = (props) => {
             },
             {
                 name: 'Location',
+                options: { display: false },
             },
             {
                 name: 'Lab ID',

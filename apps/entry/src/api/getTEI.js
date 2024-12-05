@@ -110,8 +110,8 @@ export const getAntibioticFollowTEI = async (
                       dataElement[key] = [value.value, value.created];
                     }
                   }
-                  if (dataElement["si9RY754UNU"]) {
-                    labSampleID = dataElement["si9RY754UNU"][0];
+                  if (dataElement["YQjelSO7fCH"]) {
+                    labSampleID = dataElement["YQjelSO7fCH"][0];
                   }
                   if (dataElement["q7U3sRRnFg5"]) {
                     locationValue = dataElement["q7U3sRRnFg5"][0]; // Update the outer variable
@@ -232,7 +232,7 @@ export const getAntibioticFollowTEI = async (
 //                 LastUpdatedDate = event.eventDate;
 //               }
 //               event.dataValues.forEach((labEvent, index) => {
-//                 if (labEvent.dataElement == "si9RY754UNU") {
+//                 if (labEvent.dataElement == "YQjelSO7fCH") {
 //                   labSampleID = labEvent.value; // Update the outer variable
 //                 }
 
@@ -260,7 +260,7 @@ export const getAntibioticFollowTEI = async (
 //                 LastUpdatedDate = event.eventDate;
 //               }
 //               event.dataValues.forEach((labEvent, index) => {
-//                 if (labEvent.dataElement == "si9RY754UNU") {
+//                 if (labEvent.dataElement == "YQjelSO7fCH") {
 //                   labSampleID = labEvent.value; // Update the outer variable
 //                 }
 
@@ -403,8 +403,8 @@ export const getPendingAntiResult = async (
                       dataElement[key] = [value.value, value.created];
                     }
                   }
-                  if (dataElement["si9RY754UNU"]) {
-                    labSampleID = dataElement["si9RY754UNU"][0];
+                  if (dataElement["YQjelSO7fCH"]) {
+                    labSampleID = dataElement["YQjelSO7fCH"][0];
                   }
                   if (dataElement["q7U3sRRnFg5"]) {
                     locationValue = dataElement["q7U3sRRnFg5"][0]; // Update the outer variable
@@ -533,8 +533,8 @@ export const getSterileTEI = async (
                 dataElement[key] = [value.value, value.created];
               }
             }
-            if (dataElement["si9RY754UNU"]) {
-              labSampleID = dataElement["si9RY754UNU"][0];
+            if (dataElement["YQjelSO7fCH"]) {
+              labSampleID = dataElement["YQjelSO7fCH"][0];
             }
             if (dataElement["q7U3sRRnFg5"]) {
               locationValue = dataElement["q7U3sRRnFg5"][0]; // Update the outer variable
@@ -681,7 +681,7 @@ export const getSterileTEI = async (
 //             }
 //             event.dataValues.forEach((labEvent, index) => {
             
-//               if (labEvent.dataElement == "si9RY754UNU") {
+//               if (labEvent.dataElement == "YQjelSO7fCH") {
 //                 labSampleID = labEvent.value; // Update the outer variable
 //               }
 
@@ -722,7 +722,7 @@ export const getSterileTEI = async (
 //               LastUpdatedDate = event.eventDate;
 //             }
 //             event.dataValues.forEach((labEvent, index) => {
-//               if (labEvent.dataElement == "si9RY754UNU") {
+//               if (labEvent.dataElement == "YQjelSO7fCH") {
 //                 labSampleID = labEvent.value; // Update the outer variable
 //               }
 
@@ -1043,7 +1043,7 @@ export const getSterileTEI = async (
 //                 LastUpdatedDate = event.eventDate;
 //               }
 //               event.dataValues.forEach((labEvent, index) => {
-//                 if (labEvent.dataElement == "si9RY754UNU") {
+//                 if (labEvent.dataElement == "YQjelSO7fCH") {
 //                   labSampleID = labEvent.value; // Update the outer variable
 //                 }
 
@@ -1157,8 +1157,8 @@ export const getPendingSampleResult = async (
                   dataElement[key] = [value.value, value.created];
                 }
               }
-              if (dataElement["si9RY754UNU"]) {
-                labSampleID = dataElement["si9RY754UNU"][0];
+              if (dataElement["YQjelSO7fCH"]) {
+                labSampleID = dataElement["YQjelSO7fCH"][0];
               }
               if (dataElement["q7U3sRRnFg5"]) {
                 locationValue = dataElement["q7U3sRRnFg5"][0]; // Update the outer variable
@@ -1265,7 +1265,7 @@ export const getPendingSampleResult = async (
 //                 LastUpdatedDate = event.eventDate;
 //               }
 //               event.dataValues.forEach((labEvent, index) => {
-//                 if (labEvent.dataElement == "si9RY754UNU") {
+//                 if (labEvent.dataElement == "YQjelSO7fCH") {
 //                   labSampleID = labEvent.value; // Update the outer variable
 //                 }
 
@@ -1429,8 +1429,8 @@ export const getAllTei = async (orgUnit, sampleTestingProgram, eventStatus) => {
                     dataElement[key] = [value.value, value.created];
                   }
                 }
-                if (dataElement["si9RY754UNU"]) {
-                  labSampleID = dataElement["si9RY754UNU"][0];
+                if (dataElement["YQjelSO7fCH"]) { 
+                  labSampleID = dataElement["YQjelSO7fCH"][0];
                 }
                 if (dataElement["q7U3sRRnFg5"]) {
                   locationValue = dataElement["q7U3sRRnFg5"][0]; // Update the outer variable

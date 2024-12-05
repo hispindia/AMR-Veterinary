@@ -250,6 +250,7 @@ export const getEventObject = async (metadata, orgUnit, tieId, eventId, editStat
 }
 
 export const createNewEvent = () => async (dispatch, getState) => {
+    
     dispatch(disableButtons)
     const orgUnit = getState().data.orgUnit
     const entity = getState().data.entity
@@ -262,7 +263,7 @@ export const createNewEvent = () => async (dispatch, getState) => {
     if (Object.keys(prevStateValues).length != 0) {
         Object.keys(prevStateValues).forEach(function (previouskey) {
             if (prevStateValues[previouskey] != "") {
-                if (prevStateValues[previouskey] != "Pathogen detected") {
+                if (prevStateValues[previouskey] != "Organism detected") {
                     values_to_send.push({
                         dataElement: previouskey,
                         value: prevStateValues[previouskey]
@@ -357,7 +358,7 @@ export const submitEvent = addMore => async (dispatch, getState) => {
         await setEventStatus(eventId, true)
         if (addMore) dispatch(createAction(RESET_PANEL_EVENT))
         else {
-            if (eventValues[ORGANISM_DETECTED] == "Pathogen detected") {
+            if (eventValues[ORGANISM_DETECTED] == "Organism detected") {
                 dispatch(createAction(SET_PREVIOUS_EVENT, { eventValues }))
                 dispatch(AddAndSubmit(false))
                 dispatch(createAction(PANEL_EDITABLE))
@@ -368,7 +369,7 @@ export const submitEvent = addMore => async (dispatch, getState) => {
             }
         }
         dispatch(createAction(SET_COMPLETED))
-        if (eventValues[ORGANISM_DETECTED] != "Pathogen detected") {
+        if (eventValues[ORGANISM_DETECTED] != "Organism detected") {
             dispatch(createAction(COMPLETED_CLICKED, true))
         }
         dispatch(createAction(COMPLETED_CLICKED, true))
@@ -398,7 +399,7 @@ export const nextEvent = (next,addMoreSample,addMoreIso) => async (dispatch, get
         if (addMoreSample) { dispatch(createAction(RESET_SAMPLE_PANEL_EVENT)) }
         if (addMoreIso) dispatch(createAction(RESET_PANEL_EVENT))
         else {
-            if (eventValues[ORGANISM_DETECTED] == "Pathogen detected") {
+            if (eventValues[ORGANISM_DETECTED] == "Organism detected") {
                 dispatch(createAction(SET_PREVIOUS_EVENT, { eventValues }))
                 dispatch(AddAndSubmit(false))
                 dispatch(createAction(PANEL_EDITABLE))
@@ -466,7 +467,7 @@ export const saveEvent = () => async (dispatch, getState) => {
         await setEventStatus(eventId, eveStatus)
         if (addMore) dispatch(createAction(RESET_PANEL_EVENT))
         else {
-            if (eventValues[ORGANISM_DETECTED] == "Pathogen detected") {
+            if (eventValues[ORGANISM_DETECTED] == "Organism detected") {
                 dispatch(createAction(SET_PREVIOUS_EVENT, { eventValues }))
                 dispatch(AddAndSubmit(false))
                 dispatch(createAction(PANEL_EDITABLE))
@@ -562,7 +563,7 @@ export const setEventValue = (key, value, isPrev,printValues) => (dispatch, getS
         value = value + "-"+ previousEventId
     }
 
-    var dID = ["GqP6sLQ1Wt3", "Gkmu7ySPxjb", "si9RY754UNU", "q7U3sRRnFg5"];
+    var dID = ["M2Jjp97RvWK", "Gkmu7ySPxjb", "YQjelSO7fCH", "q7U3sRRnFg5"];
     if (isPrev != true) {
         updateEventValue(event.id, key, value, programId,orgUnit,trackerID,tempStatus,tempProgramStage)
     }
@@ -692,7 +693,7 @@ export const clinicianEvent = (next, addMoreSample, addMoreIso) => async (dispat
                     dispatch(createAction(PAGE_FIRST, true))
                 }
                 else {
-                    if (eventValues[ORGANISM_DETECTED] == "Pathogen detected") {
+                    if (eventValues[ORGANISM_DETECTED] == "Organism detected") {
                         dispatch(createAction(SET_PREVIOUS_EVENT, { eventValues }))
                         dispatch(AddAndSubmit(false))
                         dispatch(createAction(PANEL_EDITABLE))

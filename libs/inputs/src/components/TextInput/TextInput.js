@@ -25,10 +25,10 @@ export const TextInput = props => {
         debouncedValue === value &&
         debouncedValue !== props.value
       ) {
-        if (props.name == "si9RY754UNU" && debouncedValue !== "") {
+        if (props.name == "YQjelSO7fCH" && debouncedValue !== "") {
           //Checks if lab sample id is filled or not
           passValue(debouncedValue);
-        } else if (props.name != "si9RY754UNU") {
+        } else if (props.name != "YQjelSO7fCH") {
           passValue(debouncedValue);
         }
       }

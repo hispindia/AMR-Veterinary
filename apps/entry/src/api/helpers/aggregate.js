@@ -105,17 +105,17 @@ export const Aggregate = async ({
     }
     changeStatus(true);
     //first get the metadata from the evens 
-    let locationDataElement = dataElements.attributeGroups[CONSTANTS.locationCode][0] //There is only one DataElement
-    let locationData = event.values[locationDataElement]
+    let locationDataElement = dataElements.attributeGroups[CONSTANTS.locationCode] [0] || null; //There is only one DataElement
+    let locationData = event.values[locationDataElement] || null;
 
-    let pathogenDataElement = dataElements.attributeGroups[CONSTANTS.pathogenCode][0] //There is only one dataElements
-    let pathogenData = event.values[pathogenDataElement]
+    let pathogenDataElement = dataElements.attributeGroups[CONSTANTS.pathogenCode][0] || null; //There is only one dataElements
+    let pathogenData = event.values[pathogenDataElement] || null;
 
-    let sampleTypeDataElement = dataElements.attributeGroups[CONSTANTS.sampleTypeCode][0]
-    let sampleTypeData = event.values[sampleTypeDataElement]
+    let sampleTypeDataElement = dataElements.attributeGroups[CONSTANTS.sampleTypeCode][0] || null;
+    let sampleTypeData = event.values[sampleTypeDataElement] || null;
 
-    let departmentDataElement = dataElements.attributeGroups[CONSTANTS.departmentCode][0]
-    let departmentData = event.values[departmentDataElement]
+    let departmentDataElement = dataElements.attributeGroups[CONSTANTS.departmentCode][0] || null;
+    let departmentData = event.values[departmentDataElement] || null;
 
     if(!(locationData && pathogenData && sampleTypeData && departmentData) ){
         //if there is any missing data don't process the aggregation

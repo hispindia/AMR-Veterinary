@@ -337,14 +337,14 @@ export const setEventStatus = async (eventId, completed) => {
             dataValue => (values[dataValue.dataElement] = dataValue.value)
         )
     }
-    if (values[L1_APPROVAL_STATUS] === 'Resend') {
-        values[L1_APPROVAL_STATUS] = ''
-        values[L1_REVISION_REASON] = ''
-    }
-    if (values[L2_APPROVAL_STATUS] === 'Resend') {
-        values[L2_APPROVAL_STATUS] = ''
-        values[L2_REVISION_REASON] = ''
-    }
+    // if (values[L1_APPROVAL_STATUS] === 'Resend') {
+    //     values[L1_APPROVAL_STATUS] = ''
+    //     values[L1_REVISION_REASON] = ''
+    // }
+    // if (values[L2_APPROVAL_STATUS] === 'Resend') {
+    //     values[L2_APPROVAL_STATUS] = ''
+    //     values[L2_REVISION_REASON] = ''
+    // }
     event = await setEventValues(event, values,{})
     await put(url, event)
 }

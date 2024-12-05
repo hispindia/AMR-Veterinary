@@ -4,6 +4,7 @@ if (!process.env.REACT_APP_DHIS2_BASE_URL)
     )
 
 const baseUrl = `${process.env.REACT_APP_DHIS2_BASE_URL}/api/`
+console.log("BASSSSSSSSSSSSSSSSS",baseUrl)
 
 /**
  * @param {String} endpoint

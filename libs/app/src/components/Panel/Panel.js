@@ -92,7 +92,7 @@ export const Panel = ({ showEdit }) => {
           ...common,
           id: "program",
           name: "program",
-          label: "Pathogen group",
+          label: "Microscopy result",
           objects: programs,
           onChange: onProgramChange,
           value: program,
@@ -112,7 +112,8 @@ export const Panel = ({ showEdit }) => {
           ...common,
           id: "organism",
           name: "organism",
-          label: "Pathogen",
+          label: "Organism",
+          
           objects: organisms,
           onChange: onChange,
           value: organism,
@@ -148,13 +149,13 @@ export const Panel = ({ showEdit }) => {
     </Padding>
   );
   if (!entityValid) return null;
-  // console.log("stageLists[program]========", stageLists[program]);
-  // console.log("programStage=======", programStage);
-  // console.log("program===================", program);
-  // console.log("editable==========", editable);
-  // console.log("defaultProgram==========", defaultProgram);
-  // console.log("sample dateeeeee",sampleDate)
-  // console.log("entityValid1==============",entityValid1)
+  console.log("stageLists[program]========", stageLists[program]);
+  console.log("programStage=======", programStage);
+  console.log("program===================", program);
+  console.log("editable==========", editable);
+  console.log("defaultProgram==========", defaultProgram);
+  console.log("sample dateeeeee",sampleDate)
+  console.log("entityValid1==============",entityValid1)
   return (
     <CardSection heading="" buttons={showEdit && <PanelButtons />}>
       <Grid container spacing={0}>

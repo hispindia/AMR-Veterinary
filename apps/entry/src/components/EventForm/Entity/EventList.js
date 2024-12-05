@@ -315,9 +315,9 @@ const Events = ({ match, history }) => {
 
           for (let value of ele.dataValues) {
             dataValue["0"] = name;
-            if (value.dataElement == LOCATION_ID) {
-              dataValue["1"] = value;
-            }
+            // if (value.dataElement == LOCATION_ID) {
+            //   dataValue["1"] = value;
+            // }
             if (value.dataElement == LAB) {
               dataValue["2"] = value;
             }
@@ -349,10 +349,10 @@ const Events = ({ match, history }) => {
             }
             dataValue["5"] = date;
           }
-          if (!dataValue["1"]) {
-            let data = [{ value: "" }];
-            dataValue["1"] = data;
-          }
+          // if (!dataValue["1"]) {
+          //   let data = [{ value: "" }];
+          //   dataValue["1"] = data;
+          // }
           if (!dataValue["2"]) {
             let data = [{ value: "" }];
             dataValue["2"] = data;
@@ -446,9 +446,9 @@ const Events = ({ match, history }) => {
             <TableCell>
               <b>Program Name</b>
             </TableCell>
-            <TableCell>
+            {/* <TableCell>
               <b>Location</b>
-            </TableCell>
+            </TableCell> */}
             <TableCell>
               <b>Lab ID</b>
             </TableCell>

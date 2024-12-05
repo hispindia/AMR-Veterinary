@@ -83,6 +83,7 @@ export const DataElement = ({ id }) => {
   const optionSet = useSelector(
     (state) => state.data.event.programStage.dataElements[id].optionSet
   );
+  console.log("optionSet===========",optionSet)
   const optionSetValue = useSelector(
     (state) => state.data.event.programStage.dataElements[id].optionSetValue
   );
@@ -92,6 +93,8 @@ export const DataElement = ({ id }) => {
   var valueType = useSelector(
     (state) => state.data.event.programStage.dataElements[id].valueType
   );
+  console.log("displayFormName============",displayFormName)
+console.log("valueType================",valueType)
 
   if (programStage.displayName.toLowerCase().includes(CLINICIAN)) {
     if (valueType == "LONG_TEXT") {
