@@ -10,7 +10,7 @@
         "company": "HISP India"
     },
     "manifest.webapp": {
-        "name": "AMR Data Entry- Patient Overview",
+        "name": "AMR Data Entry",
         "description": "Enter AMR data.",
         "appType": "APP",
         "activities": {

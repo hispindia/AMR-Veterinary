@@ -57,6 +57,7 @@ const Events = ({ match, history }) => {
       setDialog(true);
     }
   };
+  
 
   programs.forEach((p) => {
     p.programStages.forEach((ps) => {
