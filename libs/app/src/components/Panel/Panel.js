@@ -29,7 +29,7 @@ export const Panel = ({ showEdit }) => {
   const isPrevEvent = useSelector((state) => state.data.previousValues);
   if (Object.keys(isPrevEvent).length || editable) {
     if (programs) {
-      programs = programs.filter(function(element) {
+      programs = programs.filter(function (element) {
         return element.value != SAMPLE_TESTING_PROGRAM[0].value;
       });
     }
@@ -107,17 +107,7 @@ export const Panel = ({ showEdit }) => {
           onChange: onChange,
           value: programStage,
         });
-      case "organism":
-        return getInput({
-          ...common,
-          id: "organism",
-          name: "organism",
-          label: "Organism",
-          
-          objects: organisms,
-          onChange: onChange,
-          value: organism,
-        });
+
       case "sampleDate":
         return getInput({
           disabled: datedisabled,
@@ -154,53 +144,40 @@ export const Panel = ({ showEdit }) => {
   console.log("program===================", program);
   console.log("editable==========", editable);
   console.log("defaultProgram==========", defaultProgram);
-  console.log("sample dateeeeee",sampleDate)
-  console.log("entityValid1==============",entityValid1)
+  console.log("sample dateeeeee", sampleDate)
+  console.log("entityValid1==============", entityValid1)
   return (
     <CardSection heading="" buttons={showEdit && <PanelButtons />}>
       <Grid container spacing={0}>
         <Grid item xs>
-        {getDataElement("sampleDate")}
-          {/* {(program == "WhYipXYg2Nh" && defaultProgram.length == 1 && programStage == "LjiZPsbh1oy" && editable)  ?(
-            <div >{getDataElement("defaultProgram")}</div>
-          ) : (program == "" && programStage == "" && !editable)? (
-            <div >
-             {getDataElement("defaultProgram")}
-            </div>
-          ) :<div style={{display: !editable ? 'none' : 'block'}}>{getDataElement("program")}</div>}
+          {getDataElement("sampleDate")}
+
           {program && stageLists[program].length >= 1 && (
             <div
-              style={{display: !editable ? 'none' : 'block'}}
-              >
-              {getDataElement("programStage")}
-            </div>
-          )} */}
-          {program && stageLists[program].length >= 1 && (
-            <div
-              style={{display: !editable ||  program =="WhYipXYg2Nh" && programStage == "LjiZPsbh1oy"  ? 'none' : 'block'}}
-              >
+              style={{ display: !editable || program == "WhYipXYg2Nh" && programStage == "LjiZPsbh1oy" ? 'none' : 'block' }}
+            >
               {getDataElement("programStage")}
             </div>
           )}
-          
+
         </Grid>
         <Grid item xs>
-       
-       
-          {/* {program && organisms.length ? getDataElement("organism") : ""} */}
-         
-         
 
-{(program == "WhYipXYg2Nh" && defaultProgram.length == 1 && programStage == "LjiZPsbh1oy" && editable)  ?(
-            <div style={{display: program =="WhYipXYg2Nh" && programStage == "LjiZPsbh1oy" ? 'none' : 'block'
-            }}>{getDataElement("defaultProgram")}</div>
-          ) : (program == "" && programStage == "" && !editable)? (
-            <div >
-             {getDataElement("defaultProgram")}
-            </div>
-          ) :<div style={{display: !editable ? 'none' : 'block'}}>{getDataElement("program")}</div>}
-           {(program && organisms.length) ? program !== "WhYipXYg2Nh" ? getDataElement('organism') : "" :  ""}
-          
+
+          <div style={{ display: (program === "WhYipXYg2Nh" && programStage === "LjiZPsbh1oy") ? 'none' : 'block' }}>
+            {
+              (program === "WhYipXYg2Nh" && defaultProgram.length === 1 && programStage === "LjiZPsbh1oy" && editable) ?
+                getDataElement("defaultProgram") :
+                (program === "" && programStage === "" && !editable) ?
+                  getDataElement("defaultProgram") :
+                  editable ?
+                    getDataElement("program") : null
+            }
+          </div>
+          {/* {(program && organisms.length && program !== "WhYipXYg2Nh") ? getDataElement("organism") : ""} */}
+
+
+
         </Grid>
       </Grid>
     </CardSection>

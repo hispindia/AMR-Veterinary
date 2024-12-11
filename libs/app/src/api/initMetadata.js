@@ -278,6 +278,7 @@ export const initMetadata = async isIsolate => {
         p.programStages
             .filter(ps => ps.access.data.write || ps.access.data.read)
             .forEach(ps => {
+               
                 stages.push({
                     value: ps.id,
                     label: ps.displayName,
@@ -293,16 +294,16 @@ export const initMetadata = async isIsolate => {
                             hide: false,
                         })
                 )
-                if (ps.dataElements[ORGANISM_ELEMENT])
-                    ps.dataElements[ORGANISM_ELEMENT].hideWithValues = true
+                // if (ps.dataElements[ORGANISM_ELEMENT])// remove condition for Organisam requried It's default 
+                //     ps.dataElements[ORGANISM_ELEMENT].hideWithValues = true
                 ps.programStageSections.forEach(pss => {
-                    if (hasHide(pss.name)) {
-                        pss.displayName = pss.name = removeOption(
-                            pss.name,
-                            HIDE
-                        )
-                        pss.hideWithValues = true
-                    }
+                    // if (hasHide(pss.name)) {
+                    //     pss.displayName = pss.name = removeOption(
+                    //         pss.name,
+                    //         HIDE
+                    //     )
+                    //     pss.hideWithValues = true
+                    // }
                     if (hasEditable(pss.name)) {
                         pss.displayName = pss.name = removeOption(
                             pss.name,

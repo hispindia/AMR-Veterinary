@@ -83,7 +83,7 @@ export const DataElement = ({ id }) => {
   const optionSet = useSelector(
     (state) => state.data.event.programStage.dataElements[id].optionSet
   );
-  console.log("optionSet===========",optionSet)
+
   const optionSetValue = useSelector(
     (state) => state.data.event.programStage.dataElements[id].optionSetValue
   );
@@ -93,8 +93,7 @@ export const DataElement = ({ id }) => {
   var valueType = useSelector(
     (state) => state.data.event.programStage.dataElements[id].valueType
   );
-  console.log("displayFormName============",displayFormName)
-console.log("valueType================",valueType)
+
 
   if (programStage.displayName.toLowerCase().includes(CLINICIAN)) {
     if (valueType == "LONG_TEXT") {
@@ -133,36 +132,11 @@ console.log("valueType================",valueType)
       !eventValPassed["KRzP6XOv1mH"]
     ) {
       updateDaysDifference(sampleRecivedDate, samplecollectedDate);
-      //   const receivedDate = new Date(sampleRecivedDate);
-      //   const collectedDate = new Date(samplecollectedDate);
-
-      //   const daysDifference = calculateDayDifference(receivedDate, collectedDate).toString();
-
-      //   dispatch(setEventValue("KRzP6XOv1mH", daysDifference, false));
+     
     }
   }, [eventValPassed, sampleRecivedDate, samplecollectedDate, dispatch]);
 
-  // useEffect(() => {
-  //     if (eventValPassed && eventValPassed["N2f6uoy2zqE"] && !eventValPassed['KRzP6XOv1mH']) {
-
-  //       let sampleDates = new Date(sampleRecivedDate);
-  //       let values = new Date(eventValPassed["Xxn6IK3L34r"]);
-  //       const calculateDay = (val, sd) => {
-  //         let difference = sd.getTime() - val.getTime();
-  //         return Math.ceil(difference / (1000 * 3600 * 24));
-  //       };
-
-  //       dispatch(
-  //         setEventValue(
-  //           "KRzP6XOv1mH",
-  //           calculateDay(values, sampleDates).toString(),
-  //           false
-  //         )
-  //       );
-
-  //     }
-
-  //   }, [eventValPassed]);
+ 
 
   const duplicate =
     id === SAMPLE_ID_ELEMENT &&
@@ -173,30 +147,9 @@ console.log("valueType================",valueType)
   );
 
   const onChange = (key, value, unique, label) => {
-    // if (key === "N2f6uoy2zqE" || key ==="Xxn6IK3L34r") {
-
-    //     let sampleDates = new Date(sampleRecivedDate);
-    //     let values = new Date(value);
-    //     const calculateDay = (val, sd) => {
-    //       let difference = sd.getTime() - val.getTime();
-    //       return Math.ceil(difference / (1000 * 3600 * 24));
-    //     };
-
-    //     dispatch(
-    //       setEventValue(
-    //         "KRzP6XOv1mH",
-    //         calculateDay(values, sampleDates).toString(),
-    //         false
-    //       )
-    //     );
-    //   }
+  
     if (key === "N2f6uoy2zqE" || key === "Xxn6IK3L34r") {
-      // const receivedDate = new Date(sampleRecivedDate);
-      // const newDate = new Date(value);
-
-      // const daysDifference = calculateDayDifference(receivedDate, newDate).toString();
-
-      // dispatch(setEventValue("KRzP6XOv1mH", daysDifference, false));
+     
       const updatedEventValues = {
         ...eventValPassed,
         [key]: value,

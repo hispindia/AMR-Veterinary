@@ -24,18 +24,22 @@ function dynamicSort(property) {
 }
 
 export const setProgram = program => (dispatch, getState) => {
+    
     const { programOrganisms, optionSets, stageLists, dataElements } = getState().metadata
     const { sampleDate } = getState().data.panel
     var organisms = [];
     var programStage = "";
     var isClinicianClicked = getState().data.clinicianClicked
+    var valid = false;
+
     if (program) {
-        optionSets[programOrganisms[program]].forEach(o => {
-            if (!organisms.find(org => org.value === o.value)) {
-                organisms.push(o);
-            }
-        });
-        organisms.sort(dynamicSort("label"))
+        valid = program == "WhYipXYg2Nh" ? false : true;
+        // optionSets[programOrganisms[program]].forEach(o => {
+        //     if (!organisms.find(org => org.value === o.value)) {
+        //         organisms.push(o);
+        //     }
+        // });
+        // organisms.sort(dynamicSort("label"))
 
         if (isClinicianClicked) {
             programStage = stageLists[program][1].value
@@ -49,10 +53,10 @@ export const setProgram = program => (dispatch, getState) => {
         createAction(SET_PANEL, {
             program,
             programStage,
-            organism: '',
+            // organism: '',
             sampleDate: sampleDate,
             organisms,
-            valid: false,
+            valid,
         })
     )
 }
@@ -61,13 +65,16 @@ export const setPanelValue = (key, value) => (dispatch, getState) => {
     const {
         program,
         programStage,
-        organism,
+        // organism,
         organisms,
         sampleDate,
     } = getState().data.panel
     const values = { program, programStage, sampleDate }
+
+    
     if (values[key] === value) return
     const valid = !Object.values({ ...values, [key]: value }).includes('')
+   
     dispatch(
         createAction(SET_PANEL_VALUE, {
             key,
