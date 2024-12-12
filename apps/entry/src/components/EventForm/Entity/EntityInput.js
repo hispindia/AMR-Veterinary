@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { setEntityValue, validateUnique } from '@hisp-amr/app'
@@ -9,6 +9,14 @@ const Padding = styled.div`
     padding: 16px;
 `
 
+const generateUniqueKey = (prefix) => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is 0-based
+    const day = String(now.getDate()).padStart(2, '0');
+    const randomDigits = String(Math.floor(Math.random() * 1000)).padStart(3, '0'); // Random 3 digits
+    return `${prefix}${year}${month}${day}${randomDigits}`;
+};
 /**
  * Entity information section.
  */
@@ -17,6 +25,7 @@ export const EntityInput = ({ attribute,userAccess }) => {
     const { optionSets } = useSelector(state => state.metadata)
     const { id: entityId, editing } = useSelector(state => state.data.entity)
     const id = attribute.trackedEntityAttribute.id
+    console.log("AAAAAAAAAAAAAAAAAAA",attribute)
     const value = useSelector(state => state.data.entity.values[id])
     const unique = useSelector(state => state.data.entity.uniques[id])
     const modal = useSelector(state => state.data.entity.modal)
@@ -25,8 +34,12 @@ export const EntityInput = ({ attribute,userAccess }) => {
     const displayLabel = attribute.trackedEntityAttribute.formName ? attribute.trackedEntityAttribute.formName : attribute.trackedEntityAttribute.displayName
     var { orgUnits } = useSelector(state => state.metadata)
     let { allOrg } = useSelector(state => state.metadata)
+    const patientType = useSelector((state) => state.data.entity.values['YGv8uqmcwne']); // Patient Type ID
     var valueToFind = "";
-
+    
+console.log("trackedEntityAttribute===valueType==========",valueType)
+console.log("displayLabel=============",displayLabel)
+console.log("=====id==========",id)
     function newOrgInsert(testorgs)
     {
     var testorgss = testorgs
@@ -64,9 +77,15 @@ export const EntityInput = ({ attribute,userAccess }) => {
     /**
      * Called on every input field change.
      */
+   
     const onChange = (n, v) => {
-        if (v !== value) dispatch(setEntityValue(n, v))
-    }
+        if (n === 'ydf3KzRSDQd' && attribute.trackedEntityAttribute.valueType === 'TEXT') {
+            // Generate unique key based on Patient Type
+            const prefix = patientType === 'Human' ? 'HU' : 'AN';
+            v = generateUniqueKey(prefix);
+        }
+        if (v !== value) dispatch(setEntityValue(n, v));//default code 
+    };
 
     /**
      * Checks if unique value is valid.
@@ -74,6 +93,14 @@ export const EntityInput = ({ attribute,userAccess }) => {
      * @param {string} value - Attribute value.
      * @param {string} label - Attribute label.
      */
+
+    useEffect(() => {
+        if (patientType && id === 'ydf3KzRSDQd') {
+            const prefix = patientType === 'Human' ? 'HU' : 'AN';
+            const uniqueId = generateUniqueKey(prefix);
+            dispatch(setEntityValue('ydf3KzRSDQd', uniqueId));
+        }
+    }, [patientType, id, dispatch]);
     const onValidation = async (name, value, label) =>
         await dispatch(validateUnique(name, value, label))
 
