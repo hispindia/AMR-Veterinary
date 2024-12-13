@@ -64,7 +64,7 @@ export const useEvents = (status, eventstatus, code,isFollowUp) => {
     var isFollowUp = useSelector(state => state.data.followup)
     const programs = useSelector(state => state.metadata.programs)
     var userAccess = false;
-console.log("programList:================= ",programList)
+
     programs.forEach(p => {
         p.programStages.forEach(ps => {
             userAccess = ps.access.data.write

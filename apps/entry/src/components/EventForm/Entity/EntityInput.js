@@ -25,7 +25,7 @@ export const EntityInput = ({ attribute,userAccess }) => {
     const { optionSets } = useSelector(state => state.metadata)
     const { id: entityId, editing } = useSelector(state => state.data.entity)
     const id = attribute.trackedEntityAttribute.id
-    console.log("AAAAAAAAAAAAAAAAAAA",attribute)
+   
     const value = useSelector(state => state.data.entity.values[id])
     const unique = useSelector(state => state.data.entity.uniques[id])
     const modal = useSelector(state => state.data.entity.modal)
@@ -36,10 +36,11 @@ export const EntityInput = ({ attribute,userAccess }) => {
     let { allOrg } = useSelector(state => state.metadata)
     const patientType = useSelector((state) => state.data.entity.values['YGv8uqmcwne']); // Patient Type ID
     var valueToFind = "";
-    
-console.log("trackedEntityAttribute===valueType==========",valueType)
-console.log("displayLabel=============",displayLabel)
-console.log("=====id==========",id)
+
+   
+// console.log("trackedEntityAttribute===valueType==========",valueType)
+// console.log("displayLabel=============",displayLabel)
+// console.log("=====id==========",id)
     function newOrgInsert(testorgs)
     {
     var testorgss = testorgs
@@ -101,6 +102,23 @@ console.log("=====id==========",id)
             dispatch(setEntityValue('ydf3KzRSDQd', uniqueId));
         }
     }, [patientType, id, dispatch]);
+    const shouldDisplayAttribute = (attribute) => {
+        // Define mapping or logic to filter attributes for Human or Animal
+        const humanAttributes = ["YGv8uqmcwne","ydf3KzRSDQd","DNfBhgYDs2v","Oyc8eKaWvih","avMfZTrNZXi","iZ3TKA9dq5T","iZ3TKA9dq5T","W9oMS8XvS2Q","XQ9frIh57ES"]; // Add IDs of attributes for Human
+        const animalAttributes = ["YGv8uqmcwne","ydf3KzRSDQd","DNfBhgYDs2v","Oyc8eKaWvih","avMfZTrNZXi","iZ3TKA9dq5T","WgdyDPjZHYB", "lFCvbHjpRjk","SDezUxuq4XM","a5k737rvDid","Iq7Mdki0wpZ",""]; // Add IDs of attributes for Animal
+
+        if (patientType === "Human") {
+            return humanAttributes.includes(attribute.trackedEntityAttribute.id);
+        } else if (patientType === "Animal") {
+            return animalAttributes.includes(attribute.trackedEntityAttribute.id);
+        }
+        return true; // Default: show attribute if no filtering logic applies
+    };
+
+    if (!shouldDisplayAttribute(attribute)) {
+        return null; // Skip rendering if the attribute doesn't match patientType
+    }// Unable to Use Hide and Unhide rules for Attributes based on patientType
+    
     const onValidation = async (name, value, label) =>
         await dispatch(validateUnique(name, value, label))
 

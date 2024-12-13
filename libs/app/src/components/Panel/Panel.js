@@ -65,9 +65,9 @@ export const Panel = ({ showEdit }) => {
     }
     if (hideType) {
       datedisabled = true;
-      if (organism) {
-        datedisabled = false;
-      }
+      // if (organism) {
+      //   datedisabled = false;
+      // }
       if (sampleDate) {
         datedisabled = true;
       }
@@ -139,13 +139,7 @@ export const Panel = ({ showEdit }) => {
     </Padding>
   );
   if (!entityValid) return null;
-  console.log("stageLists[program]========", stageLists[program]);
-  console.log("programStage=======", programStage);
-  console.log("program===================", program);
-  console.log("editable==========", editable);
-  console.log("defaultProgram==========", defaultProgram);
-  console.log("sample dateeeeee", sampleDate)
-  console.log("entityValid1==============", entityValid1)
+
   return (
     <CardSection heading="" buttons={showEdit && <PanelButtons />}>
       <Grid container spacing={0}>

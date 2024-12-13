@@ -56,6 +56,12 @@ export const DataElement = ({ id }) => {
   var disabled = useSelector(
     (state) => state.data.event.programStage.dataElements[id].disabled
   );
+ 
+  
+  const OrganismValueIdentificationForHideOrganim = useSelector(
+    (state) => state.data.event.values["FutBdmVk5Yb"]
+  );
+ 
   if (
     userGroup == LABTECH &&
     programStage.displayName.toLowerCase().includes(CLINICIAN)
@@ -71,6 +77,7 @@ export const DataElement = ({ id }) => {
   const displayFormName = useSelector(
     (state) => state.data.event.programStage.dataElements[id].displayFormName
   );
+
   if (displayFormName == NOTES) {
     value = value.split("-")[0];
   }
@@ -108,6 +115,7 @@ export const DataElement = ({ id }) => {
   const sampleRecivedDate = useSelector(
     (state) => state.data.event.values["N2f6uoy2zqE"]
   );
+
   const samplecollectedDate = useSelector(
     (state) => state.data.event.values["Xxn6IK3L34r"]
   );
@@ -223,7 +231,8 @@ export const DataElement = ({ id }) => {
             value={value}
             onChange={onChange}
             required={required}
-            disabled={disabled || completed}
+            // disabled= {disabled || completed}
+            disabled={OrganismValueIdentificationForHideOrganim === "No" && id === "IcZgS8cWF6H"}// Disable the Organism Condition
           />
         )
       ) : valueType === "TRUE_ONLY" ? (

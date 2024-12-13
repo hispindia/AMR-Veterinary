@@ -290,7 +290,7 @@ const Events = ({ match, history }) => {
   };
   var val = () => {
     if (events != undefined) {
-      console.log("events=================",events)
+     
       const v = events?.map((ele, index) => {
         if (!clinicianPsList.includes(ele.programStage)) {
           var proId = ele.program;
