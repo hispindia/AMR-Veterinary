@@ -1,5 +1,5 @@
 export const ORGANISM_ELEMENT = 'IcZgS8cWF6H'
-export const TEST_RESULT_ELEMENT = 'PWl3DzPeiCh'
+export const TEST_RESULT_ELEMENT = 'Zkho4v6Ea3G'
 export const SAMPLE_ID_ELEMENT = 'YQjelSO7fCH'
 export const AMR_ELEMENT = 'lIkk661BLpG'
 export const IS_ISOLATE_ELEMENT = 'ugtQC30LNua'
