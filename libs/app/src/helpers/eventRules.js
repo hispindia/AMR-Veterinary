@@ -75,22 +75,22 @@ export const eventRules = (
       }
     });
     // Add condition for this dataElement kk15uVyCVnc(Cefoxitin_Result)
-    if (affected?.id == "kk15uVyCVnc" && testValue == "Resistant") {
-      variables.forEach((id) => {
-        const dataElement = stage.dataElements[id];
+    // if (affected?.id == "kk15uVyCVnc" && testValue == "Resistant") {
+    //   variables.forEach((id) => {
+    //     const dataElement = stage.dataElements[id];
 
-        console.log("testValue=======111===hhhhh==", testValue);
-        if (testValue == "Resistant") {
-          dataElement.warning = dataElement?.warning? dataElement.warning :"Resistant for 3rd generation cephalosporins and oxacillin";
-        } else {
-          dataElement.warning = "";
-        }
+    //     console.log("testValue=======111===hhhhh==", testValue);
+    //     if (testValue == "Resistant") {
+    //       dataElement.warning = dataElement?.warning? dataElement.warning :"Resistant for 3rd generation cephalosporins and oxacillin";
+    //     } else {
+    //       dataElement.warning = "";
+    //     }
 
-        // if (testValue == "Resistant" && dataElement.id == "nwF1JnlMJXo") {
-        //   dataElement.warning = "hhhhhhh";
-        // }
-      });
-    }
+    //     // if (testValue == "Resistant" && dataElement.id == "nwF1JnlMJXo") {
+    //     //   dataElement.warning = "hhhhhhh";
+    //     // }
+    //   });
+    // }
   };
 
   rules.forEach((rule) => {

@@ -35,7 +35,7 @@ export const Entity = ({ showEdit }) => {
 
     return (
         <CardSection
-            heading="Person"
+            // heading="Person"
             buttons={id && showEdit && userAccess && <EntityButtons />}
         >
             <EntityModal />
