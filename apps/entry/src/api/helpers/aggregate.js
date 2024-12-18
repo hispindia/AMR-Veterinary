@@ -8,12 +8,14 @@ import {
 } from 'antd'
 
 const CONSTANTS = {
-    customAttributeMetadataTypeIdentifier: 'metadata_type',
+    customAttributeMetadataTypeIdentifier: 'Metadata_type',
     locationCode: "location",
     departmentCode: "Department",
-    pathogenCode: "pathogen",
-    sampleTypeCode: "sample_type",
+    pathogenCode: "Organism",
+    sampleTypeCode: "SampleType",
     sampleAndLocationCC_Code: "sampleAndLocation",
+    sampleCC_Code: "sample",
+
     antibioticCC_Code: "antibiotic",
     defaultCC_code: "default",
     antibioticAttributeCode: 'antibiotic',
@@ -104,20 +106,22 @@ export const Aggregate = async ({
         }
     }
     changeStatus(true);
-    //first get the metadata from the evens 
+    //first get the metadata from the evens
+    /*
     let locationDataElement = dataElements.attributeGroups[CONSTANTS.locationCode] [0] || null; //There is only one DataElement
     let locationData = event.values[locationDataElement] || null;
-
+    */
     let pathogenDataElement = dataElements.attributeGroups[CONSTANTS.pathogenCode][0] || null; //There is only one dataElements
     let pathogenData = event.values[pathogenDataElement] || null;
 
     let sampleTypeDataElement = dataElements.attributeGroups[CONSTANTS.sampleTypeCode][0] || null;
     let sampleTypeData = event.values[sampleTypeDataElement] || null;
 
+    /*
     let departmentDataElement = dataElements.attributeGroups[CONSTANTS.departmentCode][0] || null;
     let departmentData = event.values[departmentDataElement] || null;
-
-    if(!(locationData && pathogenData && sampleTypeData && departmentData) ){
+    */
+    if(!(sampleTypeData && pathogenData ) ){
         //if there is any missing data don't process the aggregation
         if(operation === "COMPLETE"){
             return {
@@ -152,10 +156,11 @@ export const Aggregate = async ({
         };
     }
 
-    let cc = categoryCombos[CONSTANTS.sampleAndLocationCC_Code].id
-    let cp = categoryCombos[CONSTANTS.sampleAndLocationCC_Code].categoryOptions[locationData];
-    cp = cp + ";" + categoryCombos[CONSTANTS.sampleAndLocationCC_Code].categoryOptions[sampleTypeData];
-    cp = cp + ";" + categoryCombos[CONSTANTS.sampleAndLocationCC_Code].categoryOptions[departmentData];
+    let cc = categoryCombos[CONSTANTS.sampleCC_Code].id
+    let cp = categoryCombos[CONSTANTS.sampleCC_Code].categoryOptions[sampleTypeData];
+
+    //cp = cp + ";" + categoryCombos[CONSTANTS.sampleAndLocationCC_Code].categoryOptions[sampleTypeData];
+    //cp = cp + ";" + categoryCombos[CONSTANTS.sampleAndLocationCC_Code].categoryOptions[departmentData];
 
     let importantValues = []
     Object.keys(event.values).forEach(value => {
@@ -216,26 +221,30 @@ export const Aggregate = async ({
                 ],
                 data: {}
             })
-        )
-        console.error("Post request not working. Response received:", b)
-        changeStatus(false)
-        return {
-            response: false,
-            message: "Unable to send data to data set"
+        );
+
+        if (!b || b.status === 204) { // Handle empty or 204 responses
+            console.warn("Post request successful but no content returned.");
+        } else {
+            try {
+                console.log("Post request response received:", await b.json());
+            } catch (jsonError) {
+                console.warn("Response not in JSON format or empty.");
+            }
         }
     } catch (error) {
-        if (error.toString().startsWith("SyntaxError: Unexpected end of JSON")) {
-            //this is because post request doesn't send back a response and it is a successful request.
-
+        if (error.toString().includes("Unexpected end of JSON")) {
+            console.warn("Known issue: empty JSON response, assuming success.");
         } else {
             console.error("Error in posting default value", error);
-            changeStatus(false)
+            changeStatus(false);
             return {
                 response: false,
                 message: "Unable to send data to data set"
-            }
+            };
         }
     }
+
 
     for (let index in importantValues) {
         let co = importantValues[index]
@@ -271,26 +280,27 @@ export const Aggregate = async ({
                     ],
                     data: {}
                 })
-            )
-            //if code reaches here then it means that there is an error in the post request.
-            console.error("Post request not working. Response received:", b)
-            changeStatus(false)
-            return {
-                response: false,
-                message: "Unable to aggregate data"
+            );
+
+            if (!b || b.status === 204) { // Handle empty or 204 responses
+                console.warn(`Post request successful for co=${co} but no content returned.`);
+            } else {
+                try {
+                    console.log(`Post request response received for co=${co}:`, await b.json());
+                } catch (jsonError) {
+                    console.warn(`Response not in JSON format or empty for co=${co}.`);
+                }
             }
         } catch (error) {
-            if (error.toString().startsWith("SyntaxError: Unexpected end of JSON")) {
-                //this is because post request doesn't send back a response and 
-                //The syntax error is because of a successfull post request.
+            if (error.toString().includes("Unexpected end of JSON")) {
+                console.warn(`Known issue: empty JSON response for co=${co}, assuming success.`);
             } else {
-                //This means that the post is working properly
-                console.error("Unable to post data", error)
-                changeStatus(false)
+                console.error("Unable to post data for co:", co, error);
+                changeStatus(false);
                 return {
                     response: false,
                     message: "Unable to aggregate data"
-                }
+                };
             }
         }
     };
