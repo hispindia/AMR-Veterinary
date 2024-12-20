@@ -297,13 +297,13 @@ export const initMetadata = async isIsolate => {
                 // if (ps.dataElements[ORGANISM_ELEMENT])// remove condition for Organisam requried It's default 
                 //     ps.dataElements[ORGANISM_ELEMENT].hideWithValues = true
                 ps.programStageSections.forEach(pss => {
-                    // if (hasHide(pss.name)) {
-                    //     pss.displayName = pss.name = removeOption(
-                    //         pss.name,
-                    //         HIDE
-                    //     )
-                    //     pss.hideWithValues = true
-                    // }
+                    if (hasHide(pss.name)) {        //Hide the Antibiotic Result Section for Cskv
+                        pss.displayName = pss.name = removeOption(
+                            pss.name,
+                            HIDE
+                        )
+                        pss.hideWithValues = true
+                    }
                     if (hasEditable(pss.name)) {
                         pss.displayName = pss.name = removeOption(
                             pss.name,

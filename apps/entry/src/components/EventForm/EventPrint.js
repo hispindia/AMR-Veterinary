@@ -26,7 +26,7 @@ import {
   SAMPLE_TYPEID,
   PATHOGEN_POSITIVE,
   PATHOGEN_NEGATIVE,
-  CR_NUMBER,
+  PATIENT_TYPE,
   LAB_ID,
   LOCATION,
   DEPARTMENT,
@@ -258,7 +258,7 @@ return (
             <TableRow>
               <TableCell style={{width: '30%'}}>
                 <Typography>
-                      <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>{ CR_NUMBER } :&nbsp;&nbsp;&nbsp;&nbsp; { entityDict["Registration number"] }</Box>
+                      <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>{ PATIENT_TYPE } :&nbsp;&nbsp;&nbsp;&nbsp; { entityDict["Registration number"] }</Box>
                 </Typography>
               </TableCell>
 

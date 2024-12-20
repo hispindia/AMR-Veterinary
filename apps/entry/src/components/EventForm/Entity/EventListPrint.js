@@ -32,7 +32,8 @@ import {
   SAMPLE_TYPEID,
   PATHOGEN_POSITIVE,
   PATHOGEN_NEGATIVE,
-  CR_NUMBER,
+  PATIENT_TYPE,
+  UNIQUE_ID,
   LAB_ID,
   LOCATION,
   DEPARTMENT,
@@ -164,6 +165,7 @@ export default function EventListPrint(props) {
   function getProgram(proId) {
     var name = "";
     for (let program of programs) {
+      console.log("program=========",program)
       if (program.value == proId) {
         name = program.label;
       }
@@ -181,6 +183,7 @@ export default function EventListPrint(props) {
           [key]: value,
         };
       }
+      console.log("key============",key)
       if (key == PATHOGEN_G) {
         var pvalue = getProgram(value);
         eventDict = {
@@ -195,8 +198,9 @@ export default function EventListPrint(props) {
         };
       }
       for (const [al, avalue] of Object.entries(allEvent)) {
-        // console.log("al, avalue=====", [al, avalue]);
+        console.log("al, avalue=====", [al, avalue]);
         var label = avalue;
+
         if (key == al) {
           if (value) {
             if (
@@ -402,11 +406,12 @@ export default function EventListPrint(props) {
         >
           <TableBody>
             <TableRow>
-              <TableCell style={{ width: "30%" }}>
+            <TableCell style={{ width: "30%" }}>
                 <Typography>
                   <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    <span>{DEPARTMENT}</span> :&nbsp;&nbsp;
-                    <span>{link["Hospital department"]}</span>
+                    {/* {LAB_ID} :&nbsp;&nbsp;{link[LAB_ID]} */}
+                    <span> {LAB_ID} </span> :&nbsp;&nbsp;
+                    <span>{link["Laboratory sample ID"]}</span>
                   </Box>
                 </Typography>
               </TableCell>
@@ -416,34 +421,6 @@ export default function EventListPrint(props) {
                     {/* {SAMPLE_TYPE} :&nbsp;&nbsp;{link["Sample type"]} */}
                     <span>{SAMPLE_TYPE}</span> :&nbsp;&nbsp;
                     <span>{link["Sample type"]}</span>
-                  </Box>
-                </Typography>
-              </TableCell>
-              {/* <TableCell style={{ width: "30%", textAlign: "right" }}>
-                <Typography>
-                  <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]}
-                  </Box>
-                </Typography>
-              </TableCell> */}
-              <TableCell style={{ width: "30%", textAlign: "right" }}>
-                <Typography>
-                  <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    {/* {LAB_ID} :&nbsp;&nbsp;{link[LAB_ID]} */}
-                    <span> {LAB_ID} </span> :&nbsp;&nbsp;
-                    <span>{link[LAB_ID]}</span>
-                  </Box>
-                </Typography>
-              </TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell style={{ width: "30%" }}>
-                <Typography>
-                  <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    {/* {LOCATION} :&nbsp;&nbsp;{link[LOCATION]} */}
-                    <span> {LOCATION} </span> :&nbsp;&nbsp;
-                    <span>{link[LOCATION]}</span>
                   </Box>
                 </Typography>
               </TableCell>
@@ -459,31 +436,30 @@ export default function EventListPrint(props) {
                   </Box>
                 </Typography>
               </TableCell>
+              {/* <TableCell style={{ width: "30%", textAlign: "right" }}>
+                <Typography>
+                  <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
+                    {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]}
+                  </Box>
+                </Typography>
+              </TableCell> */}
+              
             </TableRow>
+
+            {/* <TableRow>
+             
+              
+            </TableRow> */}
           </TableBody>
         </Table>
 
-        <Box
-          sx={
-            {
-              // display: "flex",
-              // justifyContent: "space-around",
-            }
-          }
-        >
+        {/* <Box>
           <>
             {Object.values(link).includes("true") ||
             Object.keys(link).includes("Others") ||
             Object.keys(link).some((key) => key.includes("staining")) ? (
               <Table
-              // sx={{
-              //   width: "40%",
-              //   minWidth: 150,
-              //   // width: { xs: "100%", md: "40%" },
-              //   "@media screen and (max-width: 600px)": {
-              //     width: "100%",
-              //   },
-              // }}
+             
               >
                 <TableBody>
                   <Box
@@ -551,7 +527,7 @@ export default function EventListPrint(props) {
                                     sx={{ fontSize: 12, m: 1 }}
                                   >
                                     {player}
-                                    {/* {player.split("_")[0]} */}
+                                   
                                   </Box>
                                 </Typography>
                               </TableCell>
@@ -595,7 +571,7 @@ export default function EventListPrint(props) {
               ""
             )}
           </>
-        </Box>
+        </Box> */}
         <Table
           sx={{
             [`& .${tableCellClasses.root}`]: {
@@ -605,51 +581,54 @@ export default function EventListPrint(props) {
         >
           <TableBody>
             <TableRow>
-              {(link["Sample Result"] !== "Rejected") && (link["Sample Result"] !== "No aerobic growth") && (link["Sample Result"] !== "Sterile") ? (
-                 <TableCell style={{ width: "30%" }}>
-                 <Typography>
-                   <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                     {/* {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]} */}
-                     <span>{PATHOGEN_G}</span> :&nbsp;&nbsp;
-                     <span style={{ fontWeight: "bold" }}>
-                       {link[PATHOGEN_G]}
-                     </span>
-                   </Box>
-                 </Typography>
-               </TableCell>
+              {link["Sample Result"] !== "Rejected" &&
+              link["Sample Result"] !== "No aerobic growth" &&
+              link["Sample Result"] !== "Sterile" ? (
+                <TableCell style={{ width: "30%" }}>
+                  <Typography>
+                    <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
+                      {/* {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]} */}
+                      <span>{PATHOGEN_G}</span> :&nbsp;&nbsp;
+                      <span style={{ fontWeight: "bold" }}>
+                        {link[PATHOGEN_G]}
+                      </span>
+                    </Box>
+                  </Typography>
+                </TableCell>
               ) : null}
-             
+
               <TableCell style={{ width: "40%" }}>
                 <Typography>
                   <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    {/* {PATHOGEN} :&nbsp;&nbsp;&nbsp;&nbsp;{link["Pathogen"]} */}
+                   
                     <span>{PATHOGEN}</span> :&nbsp;&nbsp;&nbsp;&nbsp;
                     <span style={{ fontWeight: "bold" }}>
-                      {/* {link["Pathogen"]} */}
-                      {link["Pathogen Group"] == "Sample testing" ? link["Sample Result"] : link["Pathogen"]}
+                     
+                      {link["Pathogen Group"] == "Sample testing"
+                        ? link["Sample Result"]
+                        : link["Organism"]}
                     </span>
                   </Box>
                 </Typography>
               </TableCell>
-              {(link["Sample Result"] == "Rejected")  ?(
-                 <TableCell >
-                 <Typography>
-                   <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                     {/* {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]} */}
-                     <span>{REASON_FOR_REJECTION}</span> :&nbsp;&nbsp;
-                     <span style={{ fontWeight: "bold" }}>
-                       {link['Reason for rejection']}
-                     </span>
-                   </Box>
-                 </Typography>
-               </TableCell>
-              ):null}
-
+              {link["Sample Result"] == "Rejected" ? (
+                <TableCell>
+                  <Typography>
+                    <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
+                      {/* {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]} */}
+                      <span>{REASON_FOR_REJECTION}</span> :&nbsp;&nbsp;
+                      <span style={{ fontWeight: "bold" }}>
+                        {link["Reason for rejection"]}
+                      </span>
+                    </Box>
+                  </Typography>
+                </TableCell>
+              ) : null}
             </TableRow>
           </TableBody>
         </Table>
 
-        {Object.keys(link).some((key) => key.includes("_Result")) ? (
+        {Object.keys(link).some((key) => key.includes("Result")) ? (
           <Table>
             <TableBody>
               <Box
@@ -679,8 +658,10 @@ export default function EventListPrint(props) {
                     Susceptibility tests
                   </TableCell>
                 </TableRow>
-                {getPlayersByPosition(link, "_Result").map((player, index) => (
+                {getPlayersByPosition(link, "Result").map((player, index) => (
+                  
                   <TableRow>
+                    {console.log("PPPPPPPPPPPPPPPPPPPPPPP",player)}
                     <TableCell
                       className={classes.tableRightBorder + " " + "antibio"}
                       style={{ width: "10%", borderBottom: "1px solid black" }}
@@ -778,18 +759,20 @@ export default function EventListPrint(props) {
         <div
           style={{
             textAlign: "center",
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: "space-between",
+            // alignItems: "center",
             display: "flex",
           }}
         >
-          <img style={{ width: "130px" }} src={EAS} alt="Left Logo" />
+          <img style={{ width: "100px" }} src={EAS} alt="Left Logo" />
           <div style={{ marginRight: "50px", marginLeft: "50px" }}>
-            <h2>JIMMA UNIVERSITY MEDICAL CENTER LABORATORY</h2>
-            <h4>Document No: JUMCL/MIC/F7.4-004</h4>
-            <h5>Version No: 5.0</h5>
+           
+            <h3>Dr. G.C. Negi College of Veterinary and Animal Sciences, CSK Himachal Pradesh Agricultural University, Palampur, 176 062
+            H.P.</h3>
+           
+            <h4>Department of Veterinary Microbiology</h4>
           </div>
-          <img style={{ height: "80px" }} src={JIMA} alt="Right Logo" />
+          <img style={{ height: "115px" }} src={JIMA} alt="Right Logo" />
         </div>
         {/* <h2>JIMMA UNIVERSITY MEDICAL CENTER LABORATORY</h2>
           <h4>Document Number: JUMCL-REC-F-103</h4>
@@ -822,31 +805,30 @@ export default function EventListPrint(props) {
                   <TableCell style={{ width: "30%" }}>
                     <Typography>
                       <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                        {CR_NUMBER} :&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                        {UNIQUE_ID} :&nbsp;&nbsp;&nbsp;&nbsp;
                         {entityDict["Registration number"]}
                       </Box>
                     </Typography>
                   </TableCell>
+                  <TableCell style={{ width: "30%" }}>
+                    <Typography>
+                      <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
+                        {PATIENT_TYPE} :&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                        {entityDict["Patient type"]}
+                      </Box>
+                    </Typography>
+                  </TableCell>
+                  
 
                   <TableCell style={{ width: "40%", textAlign: "center" }}>
                     <Typography>
                       <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
                         {NAME} :&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                        {entityDict["First name"]} {entityDict["Middle name"]}{" "}
-                        {entityDict["Last name"]}
+                        {entityDict["Patient name"]}
                       </Box>
                     </Typography>
                   </TableCell>
-                  <TableCell style={{ width: "30%", textAlign: "right" }}>
-                    <Typography>
-                      <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                        {REGISTRATION_DATE} :&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                        {moment(entityDict[REGISTRATION_DATE]).format(
-                          "DD/MM/yyyy"
-                        )}
-                      </Box>
-                    </Typography>
-                  </TableCell>
+                 
                 </TableRow>
                 <TableRow>
                   <TableCell style={{ width: "30%" }}>
@@ -858,16 +840,18 @@ export default function EventListPrint(props) {
                   </TableCell>
                   <TableCell style={{ width: "30%", textAlign: "center" }}>
                     <Typography>
-                      {/* <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                        {AGE} :&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                        {moment().diff(entityDict["Age / DOB"], "years")} years{" "}
-                        {moment().diff(entityDict["Age / DOB"], "months") % 12}{" "}
-                        months {moment().diff(entityDict["Age / DOB"], "days")}{" "}
-                        days
-                      </Box> */}
                       <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                        {AGE} :&nbsp;&nbsp;&nbsp;&nbsp; {yearsDiff} years{" "}
-                        {monthsDiff} months {daysDiff} days
+                        {AGE} :&nbsp;&nbsp;&nbsp;&nbsp;{entityDict["Age / DOB"]}
+                      </Box>
+                    </Typography>
+                  </TableCell>
+                  <TableCell style={{ width: "30%", textAlign: "right" }}>
+                    <Typography>
+                      <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
+                        {REGISTRATION_DATE} :&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                        {moment(entityDict[REGISTRATION_DATE]).format(
+                          "DD/MM/yyyy"
+                        )}
                       </Box>
                     </Typography>
                   </TableCell>
@@ -1208,11 +1192,16 @@ export default function EventListPrint(props) {
                 </div>
               </div>
             )}
-           
+
             {(contentDisplayed = true)}
           </React.Fragment>
         ))}
-         <div style={{fontWeight:'bold',textAlign:'center',padding:'20px'}}>JUMC Laboratory is accredited in Microbiology Test by Ethiopian Accreditation Service Since 2023</div>
+        <div
+          style={{ fontWeight: "bold", textAlign: "center", padding: "20px" }}
+        >
+          JUMC Laboratory is accredited in Microbiology Test by Ethiopian
+          Accreditation Service Since 2023
+        </div>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="secondary">
