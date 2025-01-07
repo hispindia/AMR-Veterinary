@@ -57,7 +57,7 @@ export const TableList = (props) => {
                 }
             },
             {
-                name: 'Name of the Patient',
+                name: 'Unique patient ID',
                                 options: {
                     customBodyRender: (value, tableMeta, updateValue) => {
                         return (
@@ -81,7 +81,7 @@ export const TableList = (props) => {
             },
             {
                 // name: 'Age',
-                name: 'DOB',
+                name: 'Sex',
                                 options: {
                     customBodyRender: (value, tableMeta, updateValue) => {
                         return (
@@ -231,7 +231,7 @@ export const TableList = (props) => {
                 name: 'Patient type',
             },
             {
-                name: 'Name of the Patient',
+                name: 'Unique patient ID',
             },
             {
                 name: 'Ward',
@@ -239,10 +239,11 @@ export const TableList = (props) => {
             },
             {
                 // name: 'Age',
-                name: 'DOB',
+                name: 'Sex',
             },
             {
                 name: 'Sex',
+                options: { display: false },
             },
             {
                 name: 'Location',

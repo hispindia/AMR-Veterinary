@@ -141,7 +141,10 @@ export const EventButtons = ({ history, existingEvent }) => {
     const submitAddIso = async () => await onNextSubmit(false,false,true)
     const onSave = async () => await dispatch(saveEvent())
     const onClinicianSubmit = async (next,addMoreSample,addMoreIso) => await dispatch(clinicianEvent(next,addMoreSample,addMoreIso))
+
+    console.log("onClinicianSubmit==============",onClinicianSubmit)
     const addClinician = async () => await onClinicianSubmit(false, false, true)
+    console.log("addClinician==============",addClinician)
     const onSaveC = async () => await dispatch(saveClinician())
     // const onViewClinicianSubmit = async (next,addMoreSample,addMoreIso) => await dispatch(viewClinicianEvent(next,addMoreSample,addMoreIso))
     // const onViewClinician = async () => await onViewClinicianSubmit(false,false,true)
@@ -298,19 +301,19 @@ export const EventButtons = ({ history, existingEvent }) => {
         disabled: !valid || buttonsDisabled,
     }
 
-    const Clinician = {
-        label: 'Clinician Notes',
-        onClick: addClinician,
-        disabled: !valid || buttonsDisabled || aggregationOnProgress || isClinicianClicked,
-        primary: true,
-        tooltip:
-            duplicate === DUPLICATE_ERROR
-                ? DUPLICATE_ERROR
-                : invalid
-                ? invalid
-                : 'Submit record and add new record for the same person',
-        loading: buttonLoading === 'submitAdd',
-    }
+    // const Clinician = {
+    //     label: 'Clinician Notes',
+    //     onClick: addClinician,
+    //     disabled: !valid || buttonsDisabled || aggregationOnProgress || isClinicianClicked,
+    //     primary: true,
+    //     tooltip:
+    //         duplicate === DUPLICATE_ERROR
+    //             ? DUPLICATE_ERROR
+    //             : invalid
+    //             ? invalid
+    //             : 'Submit record and add new record for the same person',
+    //     loading: buttonLoading === 'submitAdd',
+    // }
 
     const Save_Notes = {
         label: 'Save Notes',
@@ -326,19 +329,33 @@ export const EventButtons = ({ history, existingEvent }) => {
         loading: buttonLoading === 'save',
     }
 
+    // const buttonsLab = () =>
+    //     existingEvent && !pageFirst ? !eventId ? [] : status.completed ? [incompleteButton, editButton,Go_Back,Clinician] : programCheck ? [completeButton, Save, Go_Back,Clinician] : [Save, Go_Back,Clinician]
+    //         : removeButtton ? [nextButton,Go_Back] : prevValues ? isCompleteClicked ? [incompleteButton, submitAddButtonIso, Go_BackIso,Clinician] : [completeButton, submitAddButtonIso, Go_BackIso,Clinician]:[submitButton,submitAddButton,Go_Back]
+
+    // const buttonsWrite = () =>
+    //     existingEvent && !pageFirst ? !eventId ? [] : status.completed ? [incompleteButton, editButton,Go_Back, Clinician] : programCheck ? [completeButton, Save, Go_Back,Clinician] : [Save, Go_Back,Clinician]
+    //         : removeButtton ? [nextButton,Go_Back] : prevValues ? isCompleteClicked ? [incompleteButton, submitAddButtonIso, Go_BackIso, Clinician] : [completeButton, submitAddButtonIso, Go_BackIso,Clinician]:isClinicianClicked?[Go_BackIso,Clinician, Save_Notes]:[submitButton,submitAddButton,Go_Back]
+
+
+    // const buttonsReadUsers = () =>
+    //     [Clinician, Go_Back]
+
+    // const clinicinaButtons = () => [Save_Notes,Go_Back]
     const buttonsLab = () =>
-        existingEvent && !pageFirst ? !eventId ? [] : status.completed ? [incompleteButton, editButton,Go_Back,Clinician] : programCheck ? [completeButton, Save, Go_Back,Clinician] : [Save, Go_Back,Clinician]
-            : removeButtton ? [nextButton,Go_Back] : prevValues ? isCompleteClicked ? [incompleteButton, submitAddButtonIso, Go_BackIso,Clinician] : [completeButton, submitAddButtonIso, Go_BackIso,Clinician]:[submitButton,submitAddButton,Go_Back]
+        existingEvent && !pageFirst ? !eventId ? [] : status.completed ? [incompleteButton, editButton,Go_Back] : programCheck ? [completeButton, Save, Go_Back] : [Save, Go_Back]
+            : removeButtton ? [nextButton,Go_Back] : prevValues ? isCompleteClicked ? [incompleteButton, submitAddButtonIso, Go_BackIso] : [completeButton, submitAddButtonIso, Go_BackIso]:[submitButton,submitAddButton,Go_Back]
 
     const buttonsWrite = () =>
-        existingEvent && !pageFirst ? !eventId ? [] : status.completed ? [incompleteButton, editButton,Go_Back, Clinician] : programCheck ? [completeButton, Save, Go_Back,Clinician] : [Save, Go_Back,Clinician]
-            : removeButtton ? [nextButton,Go_Back] : prevValues ? isCompleteClicked ? [incompleteButton, submitAddButtonIso, Go_BackIso, Clinician] : [completeButton, submitAddButtonIso, Go_BackIso,Clinician]:isClinicianClicked?[Go_BackIso,Clinician, Save_Notes]:[submitButton,submitAddButton,Go_Back]
+        existingEvent && !pageFirst ? !eventId ? [] : status.completed ? [incompleteButton, editButton,Go_Back] : programCheck ? [completeButton, Save, Go_Back] : [Save, Go_Back]
+            : removeButtton ? [nextButton,Go_Back] : prevValues ? isCompleteClicked ? [incompleteButton, submitAddButtonIso, Go_BackIso] : [completeButton, submitAddButtonIso, Go_BackIso]:isClinicianClicked?[Go_BackIso, Save_Notes]:[submitButton,submitAddButton,Go_Back]
 
 
     const buttonsReadUsers = () =>
-        [Clinician, Go_Back]
+        [ Go_Back]
 
     const clinicinaButtons = () => [Save_Notes,Go_Back]
+
 
     return <StyledButtonRow buttons={userGroup === LABTECH ? isClinicianClicked && !record ? clinicinaButtons() : buttonsLab() : userAccess ? isClinicianClicked ? clinicinaButtons() : buttonsWrite() : isClinicianClicked ? clinicinaButtons() : buttonsReadUsers()} />
 }

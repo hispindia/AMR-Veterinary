@@ -648,9 +648,9 @@ export const clinicianEvent = (next, addMoreSample, addMoreIso) => async (dispat
     var deId = getState().metadata.NotesDE["Notes"]
     var { program, programStage, organism, organisms, sampleDate } = getState().data.panel
     const { stageLists } = getState().metadata
-
+//
     if (program) {
-        programStage = stageLists[program][1].value
+        programStage = stageLists[program][0]?.value
     }
 
     const trackerEntityID = getState().data.entity.id;
@@ -662,7 +662,7 @@ export const clinicianEvent = (next, addMoreSample, addMoreIso) => async (dispat
     dispatch(createAction(PREVIOUS_EVENT, eventId ))
 
     const cliEveId = await getClinician(trackerEntityID, program, programStage, ou, deId, eventId)
-
+console.log("userGroupCode============",userGroupCode)
     if (cliEveId.length > 0) {
         dispatch(getExistingEvent(ou, trackerEntityID, cliEveId[0].event))
     }

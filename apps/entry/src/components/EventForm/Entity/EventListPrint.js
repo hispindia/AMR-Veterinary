@@ -45,12 +45,14 @@ import {
   GENDER,
   AGE,
   PATHOGEN_G,
+  PATHOGEN_G1,
   PATHOGEN,
   REASON_FOR_REJECTION,
   AST,
   NOTES,
 } from "./constants";
 import "./print.css";
+import { object } from "prop-types";
 
 const useStyles = makeStyles({
   root: {},
@@ -82,6 +84,7 @@ export default function EventListPrint(props) {
 
   const classes = useStyles();
   var eventIDs = props.eve;
+  console.log("eventIDs==", eventIDs);
   var cliEvents = props.cliEve;
   var { program, organism, sampleDate, programs } = useSelector(
     (state) => state.data.panel
@@ -109,12 +112,14 @@ export default function EventListPrint(props) {
       clini.push(alkey);
     }
   }
-
+  console.log("eventsList=========", eventsList);
   eventsList.forEach((ev, index) => {
     var dVs = {};
     var cliDvs = {};
+    console.log("eventIDs[0]===", eventIDs[0]);
     var isEve = eventIDs[0].includes(ev.event);
-    console.log("ev===============", ev);
+    console.log("isEve========", isEve);
+    console.log("ev===============111111111", ev);
     var isCliEves = false;
     if (cliEvents.length !== 0) {
       isCliEves = cliEvents[0].includes(ev.event);
@@ -123,8 +128,9 @@ export default function EventListPrint(props) {
       for (let value of ev.dataValues) {
         dVs[value.dataElement] = value.value;
       }
+      console.log("ev================", ev);
       dVs[SAMPLE_DATE] = ev.eventDate;
-      dVs[PATHOGEN_G] = ev.program;
+      dVs[PATHOGEN_G1] = ev.program;
       dVs[REGISTRATION_DATE] = ev.created;
       eventVals2.push(dVs);
     }
@@ -165,14 +171,14 @@ export default function EventListPrint(props) {
   function getProgram(proId) {
     var name = "";
     for (let program of programs) {
-      console.log("program=========",program)
+      // console.log("program=========", program);
       if (program.value == proId) {
         name = program.label;
       }
     }
     return name;
   }
-
+  // console.log("eventVals2222222222222", eventVals2);
   for (let ekey of eventVals2) {
     var eventDict = {};
 
@@ -183,9 +189,10 @@ export default function EventListPrint(props) {
           [key]: value,
         };
       }
-      console.log("key============",key)
-      if (key == PATHOGEN_G) {
+      // console.log("key============", key);
+      if (key == PATHOGEN_G1) {
         var pvalue = getProgram(value);
+        // console.log("pvalue===========", pvalue);
         eventDict = {
           ...eventDict,
           [key]: pvalue,
@@ -197,16 +204,19 @@ export default function EventListPrint(props) {
           [key]: value,
         };
       }
+      // console.log("*******",object.entries(allEvent))
       for (const [al, avalue] of Object.entries(allEvent)) {
-        console.log("al, avalue=====", [al, avalue]);
+        // console.log("al, avalue=====", [al, avalue]);
         var label = avalue;
+        // console.log("label========",label)
 
         if (key == al) {
           if (value) {
             if (
-              !label.includes("_DD") &&
-              !label.includes("_MIC") &&
-              !label.includes("Test")
+              !label.includes("_DD")
+              // &&
+              // !label.includes("_MIC") &&
+              // !label.includes("Test")
             ) {
               eventDict = {
                 ...eventDict,
@@ -216,6 +226,7 @@ export default function EventListPrint(props) {
           }
         }
       }
+      console.log("eventDictFOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", eventDict);
     }
     eventLDict.push(eventDict);
   }
@@ -228,9 +239,10 @@ export default function EventListPrint(props) {
           if (key == al) {
             if (value) {
               if (
-                !label.includes("_DD") &&
-                !label.includes("_MIC") &&
-                !label.includes("Test")
+                !label.includes("_DD")
+                //  &&
+                // !label.includes("_MIC") &&
+                // !label.includes("Test")
               ) {
                 eventCliDict = {
                   ...eventCliDict,
@@ -241,109 +253,13 @@ export default function EventListPrint(props) {
           }
         }
       }
+      console.log("eventCliDict11111111111111", eventCliDict);
       if (Object.keys(eventCliDict).length !== 0) {
         eventClinical.push(eventCliDict);
       }
     }
   }
-  // completeEvent.forEach((event) => {
-  //   if (event.status === "COMPLETED") {
-  //     let obj = {
-  //       "Hospital department": "",
-  //       "Lab ID": "",
-  //       Pathogen: "",
-  //       "Patient Location": "",
-  //       "Sample type": "",
-  //       EventDate: "",
-  //       "AMR ID": "",
-  //       Organism: "",
-  //       "Reason for Testing": "",
-  //       "Purpose of sample": "",
-  //       Syndrome: "",
-  //       "Isolate / coloniser": "",
-  //       dataValue: [],
-  //     };
-  //     let arr = [];
-  //     // let program = programs.filter((p) => p.id == event.program);
-  //     obj["EventDate"] = event.eventDate.split("T")[0];
-  //     registrationDate["Reg Date"] = event.created.split("T")[0];
-  //     // obj["program"] = program[0].name;
-  //     event.dataValues.forEach((dv) => {
-  //       let deObj = metaDataDataElement.filter((de) => {
-  //         if (de.id === dv.dataElement) {
-  //           de["value"] = dv.value;
-  //           return de;
-  //         }
-  //       });
-  //       if (
-  //         deObj[0].id !== "B7XuDaXPv10" &&
-  //         deObj[0].id !== "GpAu5HjWAEz" &&
-  //         deObj[0].id !== "mp5MeJ2dFQz" &&
-  //         deObj[0].id !== "dRKIjwIDab4" &&
-  //         deObj[0].id !== "SaQe2REkGVw" &&
-  //         deObj[0].id !== "dRKIjwIDab4" &&
-  //         deObj[0].id !== "lIkk661BLpG" &&
-  //         deObj[0].id !== "WxuMCW0sdbT" &&
-  //         deObj[0].id !== "lJm7JZvPQxA" &&
-  //         deObj[0].id !== "mOMWw59PvKU" &&
-  //         deObj[0].id !== "MOsgkq0ptBm"
-  //       ) {
-  //         arr.push(deObj[0]);
-  //       }
-  //       if (dv.dataElement === "B7XuDaXPv10") {
-  //         obj["Patient Location"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "dRKIjwIDab4") {
-  //         obj["Hospital department"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "GpAu5HjWAEz") {
-  //         obj["Lab ID"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "mp5MeJ2dFQz") {
-  //         obj["Sample type"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "dRKIjwIDab4") {
-  //         obj["Hospital department"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "SaQe2REkGVw") {
-  //         // let tempDeName= tempDataElements.filter(de=> de.code === dv.value)
-  //         //   obj["Organism"] = tempDeName[0].name;
-  //         obj["Organism"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "lIkk661BLpG") {
-  //         obj["AMR ID"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "WxuMCW0sdbT") {
-  //         obj["Reason for Testing"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "lJm7JZvPQxA") {
-  //         obj["Purpose of sample"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "mOMWw59PvKU") {
-  //         obj["Syndrome"] = dv.value;
-  //       }
-  //       if (dv.dataElement === "MOsgkq0ptBm") {
-  //         obj["Isolate / coloniser"] = dv.value;
-  //       }
-  //     });
-  //     let oarr = [];
-  //     for (let ele of arr) {
-  //       let val = parseInt(ele.value);
-  //       let isNumber = Number.isInteger(val);
-  //       if (!isNumber) {
-  //         if (
-  //           ele.id !== "DeFdBFxsFcj" &&
-  //           ele.id !== "tQa6uU1t6s3" &&
-  //           ele.id !== "YoCmEMUlZxb"
-  //         ) {
-  //           oarr.push(ele);
-  //         }
-  //       }
-  //     }
-  //     obj["dataValue"] = oarr;
-  //     eventL.push(obj);
-  //   }
-  // });
+
   const handlePrint = useReactToPrint({
     content: () => ref.current,
     onAfterPrint: () => handleClose(),
@@ -394,6 +310,8 @@ export default function EventListPrint(props) {
   const daysDiff = currentDate.diff(dob, "days");
   let count = 0;
   const listItems = eventLDict.map((link) => {
+    console.log("LINKKKKKKKKKKKKKKKKKKKK", link);
+    console.log("link0000000000000000", link["Sample Result"]);
     count = 0;
     return (
       <Box sx={{ border: 1, fontSize: 12, ml: 6, mr: 6, mt: 1, mb: 1 }}>
@@ -406,10 +324,9 @@ export default function EventListPrint(props) {
         >
           <TableBody>
             <TableRow>
-            <TableCell style={{ width: "30%" }}>
+              <TableCell style={{ width: "30%" }}>
                 <Typography>
                   <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    {/* {LAB_ID} :&nbsp;&nbsp;{link[LAB_ID]} */}
                     <span> {LAB_ID} </span> :&nbsp;&nbsp;
                     <span>{link["Laboratory sample ID"]}</span>
                   </Box>
@@ -418,7 +335,6 @@ export default function EventListPrint(props) {
               <TableCell style={{ width: "40%", textAlign: "center" }}>
                 <Typography>
                   <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    {/* {SAMPLE_TYPE} :&nbsp;&nbsp;{link["Sample type"]} */}
                     <span>{SAMPLE_TYPE}</span> :&nbsp;&nbsp;
                     <span>{link["Sample type"]}</span>
                   </Box>
@@ -427,8 +343,6 @@ export default function EventListPrint(props) {
               <TableCell style={{ width: "40%", textAlign: "center" }}>
                 <Typography>
                   <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    {/* {SAMPLE_DATE} :&nbsp;&nbsp;
-                    {moment(link[SAMPLE_DATE]).format("DD/MM/yyyy")} */}
                     <span> {SAMPLE_DATE} </span> :&nbsp;&nbsp;
                     <span>
                       {moment(link[SAMPLE_DATE]).format("DD/MM/yyyy")}
@@ -436,20 +350,7 @@ export default function EventListPrint(props) {
                   </Box>
                 </Typography>
               </TableCell>
-              {/* <TableCell style={{ width: "30%", textAlign: "right" }}>
-                <Typography>
-                  <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                    {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]}
-                  </Box>
-                </Typography>
-              </TableCell> */}
-              
             </TableRow>
-
-            {/* <TableRow>
-             
-              
-            </TableRow> */}
           </TableBody>
         </Table>
 
@@ -581,29 +482,35 @@ export default function EventListPrint(props) {
         >
           <TableBody>
             <TableRow>
-              {link["Sample Result"] !== "Rejected" &&
-              link["Sample Result"] !== "No aerobic growth" &&
-              link["Sample Result"] !== "Sterile" ? (
+              {link["Culture result"] == "Sterile" ? (
                 <TableCell style={{ width: "30%" }}>
                   <Typography>
                     <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                      {/* {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]} */}
-                      <span>{PATHOGEN_G}</span> :&nbsp;&nbsp;
+                      <span>Culture result</span> :&nbsp;&nbsp;
                       <span style={{ fontWeight: "bold" }}>
-                        {link[PATHOGEN_G]}
+                        {link["Culture result"]}
                       </span>
                     </Box>
                   </Typography>
                 </TableCell>
-              ) : null}
+              ) : (
+                <TableCell style={{ width: "30%" }}>
+                  <Typography>
+                    <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
+                      <span>{PATHOGEN_G}</span> :&nbsp;&nbsp;
+                      <span style={{ fontWeight: "bold" }}>
+                        {link["Pathogen Group"]}
+                      </span>
+                    </Box>
+                  </Typography>
+                </TableCell>
+              )}
 
               <TableCell style={{ width: "40%" }}>
                 <Typography>
                   <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                   
                     <span>{PATHOGEN}</span> :&nbsp;&nbsp;&nbsp;&nbsp;
                     <span style={{ fontWeight: "bold" }}>
-                     
                       {link["Pathogen Group"] == "Sample testing"
                         ? link["Sample Result"]
                         : link["Organism"]}
@@ -615,7 +522,6 @@ export default function EventListPrint(props) {
                 <TableCell>
                   <Typography>
                     <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-                      {/* {PATHOGEN_G} :&nbsp;&nbsp;{link[PATHOGEN_G]} */}
                       <span>{REASON_FOR_REJECTION}</span> :&nbsp;&nbsp;
                       <span style={{ fontWeight: "bold" }}>
                         {link["Reason for rejection"]}
@@ -659,9 +565,8 @@ export default function EventListPrint(props) {
                   </TableCell>
                 </TableRow>
                 {getPlayersByPosition(link, "Result").map((player, index) => (
-                  
                   <TableRow>
-                    {console.log("PPPPPPPPPPPPPPPPPPPPPPP",player)}
+                    {console.log("PPPPPPPPPPPPPPPPPPPPPPP", player)}
                     <TableCell
                       className={classes.tableRightBorder + " " + "antibio"}
                       style={{ width: "10%", borderBottom: "1px solid black" }}
@@ -748,52 +653,25 @@ export default function EventListPrint(props) {
       aria-describedby="scroll-dialog-description"
     >
       <DialogContent dividers ref={ref}>
-        {/* <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "column",
-          }}
-        > */}
         <div
           style={{
             textAlign: "center",
             justifyContent: "space-between",
-            // alignItems: "center",
+
             display: "flex",
           }}
         >
           <img style={{ width: "100px" }} src={EAS} alt="Left Logo" />
           <div style={{ marginRight: "50px", marginLeft: "50px" }}>
-           
-            <h3>Dr. G.C. Negi College of Veterinary and Animal Sciences, CSK Himachal Pradesh Agricultural University, Palampur, 176 062
-            H.P.</h3>
-           
+            <h3>
+              Dr. G.C. Negi College of Veterinary and Animal Sciences, CSK
+              Himachal Pradesh Agricultural University, Palampur, 176 062 H.P.
+            </h3>
+
             <h4>Department of Veterinary Microbiology</h4>
           </div>
           <img style={{ height: "115px" }} src={JIMA} alt="Right Logo" />
         </div>
-        {/* <h2>JIMMA UNIVERSITY MEDICAL CENTER LABORATORY</h2>
-          <h4>Document Number: JUMCL-REC-F-103</h4>
-          <h5>Version Number:5.0</h5>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-          >
-            <img
-              style={{ width: "130px", padding: "5px 0px 0px 16px" }}
-              src={EAS}
-              alt="Left Logo"
-            />
-            <span style={{ flex: "1" }}></span>{" "}
-          
-            <img style={{ height: "80px" }} src={JIMA} alt="Right Logo" />
-          </div>
-        </div> */}
 
         <Box sx={{ border: "1px solid black", fontSize: 12, m: 1 }}>
           <Box sx={{ border: 2, fontSize: 12, ml: 6, mr: 6, mt: 1, mb: 1 }}>
@@ -818,7 +696,6 @@ export default function EventListPrint(props) {
                       </Box>
                     </Typography>
                   </TableCell>
-                  
 
                   <TableCell style={{ width: "40%", textAlign: "center" }}>
                     <Typography>
@@ -828,7 +705,6 @@ export default function EventListPrint(props) {
                       </Box>
                     </Typography>
                   </TableCell>
-                 
                 </TableRow>
                 <TableRow>
                   <TableCell style={{ width: "30%" }}>
@@ -859,7 +735,6 @@ export default function EventListPrint(props) {
               </TableBody>
             </Table>
           </Box>
-          {/* {listItemTable} */}
 
           {listItems}
           {console.log("entityDict===================", entityDict)}
@@ -948,260 +823,56 @@ export default function EventListPrint(props) {
         {eventLDict.map((link, index) => (
           <React.Fragment key={index}>
             {!contentDisplayed && (
-              // <Box sx={{ fontSize: 12, p: 1 }}>
-              //   <Table
-              //     sx={{
-              //       [`& .${tableCellClasses.root}`]: {
-              //         borderBottom: "none",
-              //       },
-              //     }}
-              //     style={{ marginTop: "5px" }}
-              //   >
-              //     <TableBody>
-              //       <TableRow
-              //         style={{
-              //           fontWeight: "bold",
-              //           borderBottom: "1px solid black ",
-              //           fontSize: "13px",
-              //           borderTop: "1px solid black",
-              //         }}
-              //       >
-              //         <TableCell
-              //           style={{
-              //             borderLeft: "1px solid black",
-              //             borderRight: "1px solid black",
-              //           }}
-              //         >
-              //           <Typography>
-              //             <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //               Reported By:{link["Final report released by"]}
-              //             </Box>
-              //           </Typography>
-              //         </TableCell>
-
-              //         <TableCell style={{ borderRight: "1px solid black" }}>
-              //           <Typography>
-              //             <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //               Reported Date:{link["Report release date"]}
-              //             </Box>
-              //           </Typography>
-              //         </TableCell>
-              //         <TableCell style={{ borderRight: "1px solid black" }}>
-              //           <Typography>
-              //             <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //               Signature:
-              //             </Box>
-              //           </Typography>
-              //         </TableCell>
-              //       </TableRow>
-              //     </TableBody>
-              //   </Table>
-
-              //   <Table
-              //     sx={{
-              //       [`& .${tableCellClasses.root}`]: {
-              //         borderBottom: "none",
-              //       },
-              //     }}
-              //     style={{ marginTop: "5px" }}
-              //   >
-              //     <TableBody>
-              //       <TableRow
-              //         style={{
-              //           fontWeight: "bold",
-              //           borderBottom: "1px solid black ",
-              //           fontSize: "13px",
-              //           borderTop: "1px solid black",
-              //         }}
-              //       >
-              //         <TableCell
-              //           style={{
-              //             borderLeft: "1px solid black",
-              //             borderRight: "1px solid black",
-              //           }}
-              //         >
-              //           <Typography>
-              //             <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //               Reviewed By:{link["Report reviewed by"]}
-              //             </Box>
-              //           </Typography>
-              //         </TableCell>
-
-              //         <TableCell style={{ borderRight: "1px solid black" }}>
-              //           <Typography>
-              //             <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //               Reviewed Date:{link["Report review date"]}
-              //             </Box>
-              //           </Typography>
-              //         </TableCell>
-              //         <TableCell style={{ borderRight: "1px solid black" }}>
-              //           <Typography>
-              //             <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //               Signature:
-              //             </Box>
-              //           </Typography>
-              //         </TableCell>
-              //       </TableRow>
-              //     </TableBody>
-              //   </Table>
-
-              //   <div
-              //     style={{
-              //       display: "flex",
-              //       alignItems: "center",
-              //       justifyContent: "center",
-              //       flexDirection: "column",
-              //     }}
-              //   >
-              //     {/* <span style={{ fontWeight: "bold" }}> INTERNAL USE ONLY</span> */}
-              //     <span style={{ fontWeight: "bold" }}>
-              //       This is Controlled Document For Internal Use Only
-              //     </span>
-              //   </div>
-              // </Box>
-
-              // <Table
-              //   sx={{
-              //     [`& .${tableCellClasses.root}`]: {
-              //       borderBottom: "none",
-              //     },
-              //   }}
-              // >
-              //   <TableBody>
-              //     <TableRow>
-              //       <TableCell style={{ width: "30%" }}>
-              //         {/* <Typography>
-              //           <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //             Reported By:&nbsp;&nbsp;
-              //             {link["Final report released by"]}
-              //           </Box>
-              //         </Typography> */}
-              //        <Typography>Reported By:</Typography>
-              //        <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-
-              //             {link["Final report released by"]}
-              //           </Box>
-              //       </TableCell>
-              //       <TableCell style={{ width: "30%", textAlign: "center" }}>
-              //         <Typography>
-              //           <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //             Reported Date:&nbsp;&nbsp;
-              //             {link["Report release date"]}
-              //           </Box>
-              //         </Typography>
-              //       </TableCell>
-
-              //       <TableCell style={{ width: "40%", textAlign: "center" }}>
-              //         <Typography>
-              //           <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //             Signature:
-              //           </Box>
-              //         </Typography>
-              //       </TableCell>
-              //     </TableRow>
-
-              //     <TableRow>
-              //       <TableCell style={{ width: "30%" }}>
-              //         <Typography>
-              //           <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //             Reviewed By:&nbsp;&nbsp;{link["Report reviewed by"]}
-              //           </Box>
-              //         </Typography>
-              //       </TableCell>
-              //       <TableCell style={{ width: "30%", textAlign: "center" }}>
-              //         <Typography>
-              //           <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //             Reviewed Date::&nbsp;&nbsp;
-              //             {link["Report review date"]}
-              //           </Box>
-              //         </Typography>
-              //       </TableCell>
-
-              //       <TableCell style={{ width: "40%", textAlign: "center" }}>
-              //         <Typography>
-              //           <Box className="boxClass" sx={{ fontSize: 12, m: 1 }}>
-              //             Signature:
-              //           </Box>
-              //         </Typography>
-              //       </TableCell>
-              //     </TableRow>
-              //   </TableBody>
-              // </Table>
-              <div
-                class="container"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  margin: "0px",
-                  marginLeft: "70px",
-                }}
-              >
+              <>
                 <div
-                  class="row"
+                  class="container"
                   style={{
                     display: "flex",
+                    flexDirection: "column",
                     width: "100%",
-                    borderBottom: "none",
+                    margin: "0px",
+                    marginLeft: "70px",
                   }}
                 >
-                  <div class="cell" style={{ flex: "1" }}>
-                    <div class="boxClass" style={{ fontSize: "12px" }}>
-                      Reported By:&nbsp;&nbsp;
-                      {link["Final report released by"]}
+                  <div
+                    class="row"
+                    style={{
+                      display: "flex",
+                      width: "100%",
+                      borderBottom: "none",
+                    }}
+                  >
+                    <div class="cell" style={{ flex: "1" }}>
+                      <div class="boxClass" style={{ fontSize: "12px" }}>
+                        Reviewed By:&nbsp;&nbsp;
+                        {link["Report reviewed by"]}
+                      </div>
                     </div>
-                  </div>
-
-                  <div class="cell" style={{ flex: "1" }}>
-                    <div class="boxClass" style={{ fontSize: "12px" }}>
-                      Reported Date:&nbsp;&nbsp;
-                      {link["Report release date"]}
+                    <div class="cell" style={{ flex: "1" }}>
+                      <div class="boxClass" style={{ fontSize: "12px" }}>
+                        Reviewed Date:&nbsp;&nbsp;
+                        {link["Report review date"]}
+                      </div>
                     </div>
-                  </div>
-                  <div class="cell" style={{ flex: "1" }}>
-                    <div class="boxClass" style={{ fontSize: "12px" }}>
-                      Signature:
+                    <div class="cell" style={{ flex: "1" }}>
+                      <div class="boxClass" style={{ fontSize: "12px" }}>
+                        Signature:
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div
-                  class="row"
-                  style={{
-                    display: "flex",
-                    width: "100%",
-                    borderBottom: "none",
-                  }}
-                >
-                  <div class="cell" style={{ flex: "1" }}>
-                    <div class="boxClass" style={{ fontSize: "12px" }}>
-                      Reviewed By:&nbsp;&nbsp;
-                      {link["Report reviewed by"]}
-                    </div>
-                  </div>
-                  <div class="cell" style={{ flex: "1" }}>
-                    <div class="boxClass" style={{ fontSize: "12px" }}>
-                      Reviewed Date:&nbsp;&nbsp;
-                      {link["Report review date"]}
-                    </div>
-                  </div>
-                  <div class="cell" style={{ flex: "1" }}>
-                    <div class="boxClass" style={{ fontSize: "12px" }}>
-                      Signature:
-                    </div>
-                  </div>
-                </div>
-              </div>
+              </>
             )}
 
             {(contentDisplayed = true)}
           </React.Fragment>
         ))}
-        <div
+        {/* <div
           style={{ fontWeight: "bold", textAlign: "center", padding: "20px" }}
         >
           JUMC Laboratory is accredited in Microbiology Test by Ethiopian
           Accreditation Service Since 2023
-        </div>
+        </div> */}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="secondary">

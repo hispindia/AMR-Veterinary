@@ -135,7 +135,9 @@ const Events = ({ match, history }) => {
         return v;
       }
     };
-
+console.log("events================",events)
+console.log("eventShow==============",eventShow)
+console.log("eventCliShow====",eventCliShow)
     const eveCliValue = () => {
       var eventClini = [];
       if (events != undefined) {
@@ -179,6 +181,7 @@ const Events = ({ match, history }) => {
               //}
               dataValue["5"] = date;
             }
+            console.log("datavale==============",dataValue)
             if (dataValue["4"]) {
                 if (dataValue["4"].value !== PATHOGEN_DETECTED) {
                     data = dataValue;
@@ -190,6 +193,8 @@ const Events = ({ match, history }) => {
         });
 
         if (eventClini.length !== 0) {
+          console.log("eventClini======TTTTT",eventClini)
+          
           setEventCliShow([...eventCliShow, eventClini]);
         }
         return v;

@@ -8,7 +8,7 @@ export var tanda = {
             name: 'Patient type',
         },
         {
-            name: 'Name of the Patient',
+            name: 'Unique patient ID',
         },
         {
             name: 'Ward',
