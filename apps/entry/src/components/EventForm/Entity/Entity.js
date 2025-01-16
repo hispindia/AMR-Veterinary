@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { bool } from 'prop-types'
 import { Grid } from '@material-ui/core'
@@ -6,7 +6,6 @@ import { CardSection, LoadingSection } from '@hisp-amr/app'
 import { EntityButtons } from './EntityButtons'
 import { EntityModal } from './EntityModal'
 import { EntityInput } from './EntityInput'
-
 /**
  * Entity information section.
  */
@@ -14,11 +13,9 @@ export const Entity = ({ showEdit }) => {
     const { person } = useSelector(state => state.metadata)
     const id = useSelector(state => state.data.entity.id)
     const attributes = useSelector(state => state.data.entity.attributes)
-    const attributes1 = useSelector(state => state.data.entity)
-    // console.log("CCCCCCCCCCCCCCCCCCCCCCCCCc",attributes1)
-    // console.log("BBBBBBBBBBBBBBBBB",attributes)
     const editing = useSelector(state => state.data.entity.editing)
     var editableVal = useSelector(state => state.data.editable)
+    const [half, setHalf] = useState();// set half state for the attribute when attributes change 
     const programs = useSelector(state => state.metadata.programs)
     var userAccess = false;
     programs.forEach(p => {
@@ -26,10 +23,13 @@ export const Entity = ({ showEdit }) => {
             userAccess = ps.access.data.write
         })
     })
+useEffect(()=>{
 
-    const [half] = useState(
-        Math.floor(person.trackedEntityTypeAttributes.length / 2)
-    )
+    if(attributes){
+        setHalf( Math.floor(attributes.length / 2))
+    }
+},[attributes])// set half while attributes change and divide the section 
+    
 
     if (!attributes) return <LoadingSection />
 

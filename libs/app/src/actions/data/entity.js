@@ -43,6 +43,7 @@ export const getEntity = id => async (dispatch, getState) => {
     dispatch(createAction(SET_MODAL_LOADING, true))
     const optionSets = getState().metadata.optionSets
     const { trackedEntityTypeAttributes, rules } = getState().metadata.person
+    
     const uniques = getState().data.entity.uniques
     Object.keys(uniques).forEach(id => (uniques[id] = true))
     try {
@@ -77,19 +78,24 @@ export const getEntity = id => async (dispatch, getState) => {
 export const setEntityValue = (key, value) => async (dispatch, getState) => {
     const optionSets = getState().metadata.optionSets
     const state = getState()
+    const { trackedEntityTypeAttributes } = getState().metadata.person
     var editableVal = state.data.editable
     var entityID = state.data.entity.id
     var updateData = {};
-    const [values, attributes, valid] = entityRules(
+    console.trace();
+
+   var [values, attributes, valid] = entityRules(
         { ...state.data.entity.values, [key]: value },
-        state.data.entity.attributes,
+        trackedEntityTypeAttributes,
         {
             rules: state.metadata.person.rules,
             optionSets,
             uniques: state.data.entity.uniques,
         }
     )
+    attributes = attributes.filter(attr => !attr.hide)// change condition for HideFields attribute 
     dispatch(createAction(SET_ENTITY_VALUE, { values, attributes, valid }))
+    
     if (editableVal) {
         updateData[key]=value
         var editResp = await updatePerson(entityID, updateData)

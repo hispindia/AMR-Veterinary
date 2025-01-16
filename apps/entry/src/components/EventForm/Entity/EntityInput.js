@@ -1,15 +1,16 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { setEntityValue, validateUnique } from '@hisp-amr/app'
 import { TextInput, AgeInput, RadioInputs, SelectInput } from '@hisp-amr/inputs'
 import {TreeViewInput} from './TreeViewInput'
 
+
 const Padding = styled.div`
     padding: 16px;
 `
 
-const generateUniqueKey = (prefix) => {
+const generateUniqueKey = (prefix) => {// generate unique key function 
     const now = new Date();
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0'); // Month is 0-based
@@ -35,12 +36,10 @@ export const EntityInput = ({ attribute,userAccess }) => {
     var { orgUnits } = useSelector(state => state.metadata)
     let { allOrg } = useSelector(state => state.metadata)
     const patientType = useSelector((state) => state.data.entity.values['YGv8uqmcwne']); // Patient Type ID
-    var valueToFind = "";
-
+    const uniques = useSelector(state => state.data.entity.uniques)
    
-// console.log("trackedEntityAttribute===valueType==========",valueType)
-// console.log("displayLabel=============",displayLabel)
-// console.log("=====id==========",id)
+    
+    var valueToFind = "";
     function newOrgInsert(testorgs)
     {
     var testorgss = testorgs
@@ -83,10 +82,12 @@ export const EntityInput = ({ attribute,userAccess }) => {
         if (n === 'ydf3KzRSDQd' && attribute.trackedEntityAttribute.valueType === 'TEXT') {
             // Generate unique key based on Patient Type
             const prefix = patientType === 'Human' ? 'HU' : 'AN';
-            v = generateUniqueKey(prefix);
+            v = generateUniqueKey(prefix);//call unique key function 
         }
         if (v !== value) dispatch(setEntityValue(n, v));//default code 
+         
     };
+   
 
     /**
      * Checks if unique value is valid.
@@ -95,74 +96,59 @@ export const EntityInput = ({ attribute,userAccess }) => {
      * @param {string} label - Attribute label.
      */
 
+    // useEffect(()=>{
+    //     setAttributesUpdate(attribute)
+    // },[])
+
     useEffect(() => {
         if (patientType && id === 'ydf3KzRSDQd') {
             const prefix = patientType === 'Human' ? 'HU' : 'AN';
             const uniqueId = generateUniqueKey(prefix);
-            dispatch(setEntityValue('ydf3KzRSDQd', uniqueId));
+            dispatch(setEntityValue('ydf3KzRSDQd', uniqueId));//set the unique id value to this attribute
         }
     }, [patientType, id, dispatch]);
-    const shouldDisplayAttribute = (attribute) => {
-        // Define mapping or logic to filter attributes for Human or Animal
-        const humanAttributes = ["YGv8uqmcwne","ydf3KzRSDQd","DNfBhgYDs2v","Oyc8eKaWvih","avMfZTrNZXi","iZ3TKA9dq5T","iZ3TKA9dq5T","W9oMS8XvS2Q","XQ9frIh57ES"]; // Add IDs of attributes for Human
-        const animalAttributes = ["YGv8uqmcwne","ydf3KzRSDQd","DNfBhgYDs2v","Oyc8eKaWvih","avMfZTrNZXi","iZ3TKA9dq5T","WgdyDPjZHYB", "lFCvbHjpRjk","SDezUxuq4XM","a5k737rvDid","Iq7Mdki0wpZ",""]; // Add IDs of attributes for Animal
-
-        if (patientType === "Human") {
-            return humanAttributes.includes(attribute.trackedEntityAttribute.id);
-        } else if (patientType === "Animal") {
-            return animalAttributes.includes(attribute.trackedEntityAttribute.id);
-        }
-        return true; // Default: show attribute if no filtering logic applies
-    };
-
-    if (!shouldDisplayAttribute(attribute)) {
-        return null; // Skip rendering if the attribute doesn't match patientType
-    }// Unable to Use Hide and Unhide rules for Attributes based on patientType
+   
     
     const onValidation = async (name, value, label) =>
         await dispatch(validateUnique(name, value, label))
-
-    if (attribute.hide) return null
-
-
-
+   
     return (
         <Padding>
-            {attribute.trackedEntityAttribute.valueType === 'AGE' ? (
+            {attribute?.trackedEntityAttribute?.valueType === 'AGE' ? (
                 <AgeInput
-                    required={attribute.mandatory}
-                    unique={attribute.trackedEntityAttribute.unique}
-                    name={attribute.trackedEntityAttribute.id}
+                    required={attribute?.mandatory}
+                    unique={attribute?.trackedEntityAttribute?.unique}
+                    name={attribute?.trackedEntityAttribute?.id}
                     label={displayLabel}
                     value={value}
                     onChange={onChange}
                     disabled={disabled}
                 />
-            ) : attribute.trackedEntityAttribute.optionSetValue ? (
-                optionSets[attribute.trackedEntityAttribute.optionSet.id]
+            ) : attribute?.trackedEntityAttribute?.optionSetValue ? (
+                optionSets[attribute?.trackedEntityAttribute?.optionSet?.id]
                     .length < 4 ? (
                     <RadioInputs
-                        required={attribute.mandatory}
+                        required={attribute?.mandatory}
                         objects={
                             optionSets[
-                                attribute.trackedEntityAttribute.optionSet.id
+                                attribute?.trackedEntityAttribute?.optionSet?.id
                             ]
                         }
-                        name={attribute.trackedEntityAttribute.id}
+                        name={attribute?.trackedEntityAttribute?.id}
                         label={displayLabel}
-                        value={value}
+                        value={value }
                         onChange={onChange}
                         disabled={disabled}
                     />
                 ) : (
                     <SelectInput
-                        required={attribute.mandatory}
+                        required={attribute?.mandatory}
                         objects={
                             optionSets[
-                                attribute.trackedEntityAttribute.optionSet.id
+                                attribute?.trackedEntityAttribute?.optionSet?.id
                             ]
                         }
-                        name={attribute.trackedEntityAttribute.id}
+                        name={attribute?.trackedEntityAttribute?.id}
                         label={displayLabel}
                         value={value}
                         onChange={onChange}
@@ -173,28 +159,28 @@ export const EntityInput = ({ attribute,userAccess }) => {
                         <TreeViewInput data={orgUnitsLabels}
                         placeholder={displayLabel}
                         onChange={onChange}
-                        name={attribute.trackedEntityAttribute.id}
+                        name={attribute?.trackedEntityAttribute.id}
                         value={valueToFind}
                         disabled={disabled}
                         />
                 : (
                 <TextInput
-                    required={attribute.mandatory}
-                    unique={attribute.trackedEntityAttribute.unique}
+                    required={attribute?.mandatory}
+                    unique={attribute?.trackedEntityAttribute?.unique}
                     uniqueInvalid={unique === false}
                     validateUnique
                     onValidation={onValidation}
-                    name={attribute.trackedEntityAttribute.id}
+                    name={attribute?.trackedEntityAttribute?.id}
                     label={displayLabel}
                     value={value}
                     onChange={onChange}
                     disabled={
                         disabled ||
-                        (attribute.trackedEntityAttribute.unique &&
+                        (attribute?.trackedEntityAttribute?.unique &&
                             (entityId || !!modal))
                     }
                     type={
-                        attribute.trackedEntityAttribute.valueType === 'NUMBER'
+                        attribute?.trackedEntityAttribute?.valueType === 'NUMBER'
                             ? 'number'
                             : 'text'
                     }
@@ -203,3 +189,5 @@ export const EntityInput = ({ attribute,userAccess }) => {
         </Padding>
     )
 }
+
+

@@ -153,6 +153,17 @@ export const DataElement = ({ id }) => {
   const required1 = useSelector(
     (state) => state.data.event.programStage.dataElements["KRzP6XOv1mH"]
   );
+  const required2 = useSelector(
+    (state) => state.data.event.programStage.dataElements["IcZgS8cWF6H"]
+  );
+  const required3 = useSelector(
+    (state) => state.data.event.programStage.dataElements["FutBdmVk5Yb"]
+  );
+ 
+  // console.log("required2============",required2);
+  // console.log("required3============",required3);
+
+
 
   const onChange = (key, value, unique, label) => {
   

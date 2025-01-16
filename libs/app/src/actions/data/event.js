@@ -60,6 +60,7 @@ export const addExistingEvent = payload => dispatch =>dispatch(createAction(SET_
 // export const PreValue = payload => dispatch=> dispatch(createAction(SET_PREVALUE, payload))
 export const initNewEvent = orgUnit => (dispatch, getState) => {
     const entityMetadata = getState().metadata.person
+    console.log("entityMetadata: " , entityMetadata)
     const optionSets = getState().metadata.optionSets
     const orgUnits = getState().metadata.orgUnits
     const programs = getState().metadata.programList.filter(p =>

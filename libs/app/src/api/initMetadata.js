@@ -130,6 +130,7 @@ export const initMetadata = async isIsolate => {
         })
 
         variables.forEach(variable => {
+            
             const id = attributeIds[variable.substring(2, variable.length - 1)]
             c = c.replace(/A\{.*?\}/g, "values['" + id + "']")
         })

@@ -5,7 +5,6 @@ import { Section } from './Section'
 
 export const Event = () => {
     const programStage = useSelector(state => state.data.event.programStage)
-    console.log("ProgramStage===========",programStage)
     const eventId = useSelector(state => state.data.event.id)
     const panelValid = useSelector(state => state.data.panel.valid)
     const state = useSelector(state => state)
