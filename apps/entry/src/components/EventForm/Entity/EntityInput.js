@@ -126,7 +126,7 @@ export const EntityInput = ({ attribute,userAccess }) => {
                 />
             ) : attribute?.trackedEntityAttribute?.optionSetValue ? (
                 optionSets[attribute?.trackedEntityAttribute?.optionSet?.id]
-                    .length < 4 ? (
+                    .length == 2 ? (
                     <RadioInputs
                         required={attribute?.mandatory}
                         objects={

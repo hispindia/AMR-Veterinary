@@ -3,7 +3,7 @@ export const entityRules = (values, attr, { rules, optionSets, uniques }) => {
         rule.programRuleActions.forEach(r => {
             try {
                 switch (r.programRuleActionType) {
-                    case 'SHOWOPTIONGROUP':
+                    case "SHOWOPTIONGROUP":
                         if (eval(rule.condition)) {
                             const affectedAttr = findAttribute(
                                 r.trackedEntityAttribute.id,

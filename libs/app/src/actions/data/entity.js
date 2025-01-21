@@ -93,7 +93,7 @@ export const setEntityValue = (key, value) => async (dispatch, getState) => {
             uniques: state.data.entity.uniques,
         }
     )
-    attributes = attributes.filter(attr => !attr.hide)// change condition for HideFields attribute 
+    attributes = attributes.filter(attr => !attr.hide)// change condition for HideFields attribute (!!Important Part for HideFields)
     dispatch(createAction(SET_ENTITY_VALUE, { values, attributes, valid }))
     
     if (editableVal) {
