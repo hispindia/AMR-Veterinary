@@ -79,11 +79,19 @@ export const EntityInput = ({ attribute,userAccess }) => {
      */
    
     const onChange = (n, v) => {
-        if (n === 'ydf3KzRSDQd' && attribute.trackedEntityAttribute.valueType === 'TEXT') {
-            // Generate unique key based on Patient Type
-            const prefix = patientType === 'Human' ? 'HU' : 'AN';
-            v = generateUniqueKey(prefix);//call unique key function 
+        // if (n === 'ydf3KzRSDQd' && attribute.trackedEntityAttribute.valueType === 'TEXT') {
+        //     // Generate unique key based on Patient Type
+        //     const prefix = patientType === 'Human' ? 'HU' : 'AN';
+        //     v = generateUniqueKey(prefix);//call unique key function 
+        // }
+        if(n == 'YGv8uqmcwne'){
+            const prefix = v == 'Human' ? 'HU' : 'AN';
+                let enycratedPatentTypevalue = generateUniqueKey(prefix);//call unique key function 
+                // dispatch(setEntityValue(n, v));//default code 
+                dispatch(setEntityValue('ydf3KzRSDQd', enycratedPatentTypevalue));
         }
+
+        
         if (v !== value) dispatch(setEntityValue(n, v));//default code 
          
     };
@@ -100,13 +108,14 @@ export const EntityInput = ({ attribute,userAccess }) => {
     //     setAttributesUpdate(attribute)
     // },[])
 
-    useEffect(() => {
-        if (patientType && id === 'ydf3KzRSDQd') {
-            const prefix = patientType === 'Human' ? 'HU' : 'AN';
-            const uniqueId = generateUniqueKey(prefix);
-            dispatch(setEntityValue('ydf3KzRSDQd', uniqueId));//set the unique id value to this attribute
-        }
-    }, [patientType, id, dispatch]);
+    // useEffect(() => {
+    //     if (patientType && id === 'ydf3KzRSDQd') {
+    //         const prefix = patientType === 'Human' ? 'HU' : 'AN';
+
+    //         const uniqueId = generateUniqueKey(prefix);
+    //         dispatch(setEntityValue('ydf3KzRSDQd', uniqueId));//set the unique id value to this attribute
+    //     }
+    // }, []);
    
     
     const onValidation = async (name, value, label) =>

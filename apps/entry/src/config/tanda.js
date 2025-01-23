@@ -10,22 +10,21 @@ export var tanda = {
         {
             name: 'Unique patient ID',
         },
+        // {
+        //     name: 'Ward',
+        //     options : {display:false},
+        // },
+       
         {
-            name: 'Ward',
-            options : {display:false},
+            name: 'Gender',
         },
-        {
-            name: 'Age',
-        },
-        {
-            name: 'Sex',
-        },
+        // {
+        //     name: 'Sex',
+        // },
         // {
         //     name: 'Location',
         // },
-        {
-            name:'Lab ID',
-        },
+      
         {
            name: 'Sample Collection Date',
             },

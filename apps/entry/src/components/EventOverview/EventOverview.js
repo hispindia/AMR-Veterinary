@@ -73,8 +73,9 @@ export const EventOverview = ({ match, history }) => {
     /**
      * Called when table row is clicked.
      */
+    console.trace("========")
     const onEventClick = (row, org, tei) => {
-            history.push(`/orgUnit/${row[9]}/trackedEntityInstances/${row[7]}`)
+            history.push(`/orgUnit/${row[7]}/trackedEntityInstances/${row[6]}`)
     }
 
     /**
