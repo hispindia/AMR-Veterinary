@@ -75,7 +75,7 @@ export const EventOverview = ({ match, history }) => {
      */
     console.trace("========")
     const onEventClick = (row, org, tei) => {
-            history.push(`/orgUnit/${row[7]}/trackedEntityInstances/${row[6]}`)
+            history.push(`/orgUnit/${row[6]}/trackedEntityInstances/${row[5]}`)
     }
 
     /**

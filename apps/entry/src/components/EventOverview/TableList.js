@@ -439,40 +439,40 @@ export const TableList = (props) => {
 
 
       
-        {
-            name: 'follow',
-            label: 'Follow up',
-            options: {
-                display: eventStatus == "COMPLETED" && code == "GP" ? true : false,
-                customBodyRender: (value, row, updateValue) => {
-                    var opt = {}
-                    var rowVal = row.rowData[0] + ''
-                    if (Object.keys(followupMaps).length == 0) {
-                        opt['destructive'] = true;
-                    }
-                    else if ((followupMaps[rowVal] == true) && (Object.keys(followupMaps).includes(rowVal))) {
-                        opt['destructive'] = true;
-                    }
-                    else if ((followupMaps[rowVal] == false) && (Object.keys(followupMaps).includes(rowVal))) {
-                        opt['secondary'] = true;
-                    }
-                    else {
-                        opt['destructive'] = true;
-                    }
-                    return (
-                        <Button {...opt}
-                            icon={"star_filled" && <Icon icon={icons["star_filled"]} />}
-                            className="FollowUp"
-                            tooltip="Mark for un follow"
-                            id="mybutton"
-                            onClick={(e) => starbuttons(e, row, isFollowUp)}
-                            size={15}
-                        ></Button>
-                    )
+        // {
+        //     name: 'follow',
+        //     label: 'Follow up',
+        //     options: {
+        //         display: eventStatus == "COMPLETED" && code == "GP" ? true : false,
+        //         customBodyRender: (value, row, updateValue) => {
+        //             var opt = {}
+        //             var rowVal = row.rowData[0] + ''
+        //             if (Object.keys(followupMaps).length == 0) {
+        //                 opt['destructive'] = true;
+        //             }
+        //             else if ((followupMaps[rowVal] == true) && (Object.keys(followupMaps).includes(rowVal))) {
+        //                 opt['destructive'] = true;
+        //             }
+        //             else if ((followupMaps[rowVal] == false) && (Object.keys(followupMaps).includes(rowVal))) {
+        //                 opt['secondary'] = true;
+        //             }
+        //             else {
+        //                 opt['destructive'] = true;
+        //             }
+        //             return (
+        //                 <Button {...opt}
+        //                     icon={"star_filled" && <Icon icon={icons["star_filled"]} />}
+        //                     className="FollowUp"
+        //                     tooltip="Mark for un follow"
+        //                     id="mybutton"
+        //                     onClick={(e) => starbuttons(e, row, isFollowUp)}
+        //                     size={15}
+        //                 ></Button>
+        //             )
 
-                }
-            }
-        },
+        //         }
+        //     }
+        // },
         
         {
             name: 'trakedid',
